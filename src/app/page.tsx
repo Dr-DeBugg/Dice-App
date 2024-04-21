@@ -7,9 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ModeToggle } from "@/components/ui/themeToggle";
+import { getAllDices } from "./dicesdata/route";
 
 export default async function Home() {
-  const response = await fetch("http://localhost:3000/dicesdata");
+  const response = await getAllDices();
   const data = await response.json();
 
   return (
