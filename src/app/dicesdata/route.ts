@@ -17,7 +17,7 @@ import { NextResponse } from "next/server";
 //   return NextResponse.json({ dices }, { status: 200 });
 // }
 
-export async function getAllDices() {
+export async function GET() {
   try {
     const result = await sql`SELECT * FROM dices;`;
 

@@ -7,10 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ModeToggle } from "@/components/ui/themeToggle";
-import { getAllDices } from "./dicesdata/route";
+import { GET } from "./dicesdata/route";
 
 export default async function Home() {
-  const response = await getAllDices();
+  const response = await GET();
   const data = await response.json();
 
   return (
