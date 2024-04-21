@@ -6,26 +6,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ModeToggle } from "@/components/ui/themeToggle";
 
-export default function Home() {
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+export default async function Home() {
+  const response = await fetch("http://localhost:3000/dicesdata");
+  const data = await response.json();
 
   return (
     <main>
-      <h1> 🎲 Hello world! ⚀ ⚁ ⚂ ⚃ ⚄ ⚅</h1>
+      <h1> Dice App 🎲 </h1>
+      <div className="p-8">
+        <ModeToggle />
+      </div>
       <div className="grid grid-cols-3 gap-8">
-        {arr.map((i) => (
-          <Card key={i}>
-            <CardHeader>
-              <div>
-                <CardTitle>Title for item {i}</CardTitle>
-                <CardDescription>gkdsgokk</CardDescription>
-              </div>
-            </CardHeader>
-            <CardContent>{i * i}</CardContent>
-            <CardFooter>this is the footer</CardFooter>
-          </Card>
-        ))}
+        {data.dices
+          ? data.dices.map((d: any) => (
+              <Card key={d.id}>
+                <CardHeader>
+                  <div>
+                    <CardTitle>Name of the die is {d.name}</CardTitle>
+                    <CardDescription>gkdsgokk</CardDescription>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {d.name} has {d.sided} sides
+                </CardContent>
+                <CardFooter>this is the footer</CardFooter>
+              </Card>
+            ))
+          : ""}
       </div>
     </main>
   );
