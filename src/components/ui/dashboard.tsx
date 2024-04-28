@@ -34,28 +34,23 @@ export const getServerSideProps = async () => {
 
 export default function Dashboard({ dices }: Props) {
   return (
-    <>
-      <div className="flex justify-end py-8">
-        <ModeToggle />
-      </div>
-      <div className="grid grid-cols-4 gap-8">
-        {dices
-          ? dices.map((d: any) => (
-              <Card key={d.id}>
-                <CardHeader>
-                  <div>
-                    <CardTitle>Name of the die is {d.name}</CardTitle>
-                    <CardDescription>gkdsgokk</CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  {d.name} has {d.sided} sides
-                </CardContent>
-                <CardFooter>this is the footer</CardFooter>
-              </Card>
-            ))
-          : ""}
-      </div>
-    </>
+    <div className="grid grid-cols-4 gap-8">
+      {dices
+        ? dices.map((d: any) => (
+            <Card key={d.id}>
+              <CardHeader>
+                <div>
+                  <CardTitle>Name of the die is {d.name}</CardTitle>
+                  <CardDescription>gkdsgokk</CardDescription>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {d.name} has {d.sided} sides
+              </CardContent>
+              <CardFooter>this is the footer</CardFooter>
+            </Card>
+          ))
+        : ""}
+    </div>
   );
 }

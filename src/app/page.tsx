@@ -7,7 +7,6 @@ export default async function Home() {
 
   return (
     <main>
-      <h1 className="text-center"> 🎲 Dice App</h1>
       <Dashboard dices={data.dices} />
     </main>
   );
