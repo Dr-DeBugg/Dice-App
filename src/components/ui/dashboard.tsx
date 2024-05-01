@@ -34,7 +34,7 @@ export const getServerSideProps = async () => {
 
 export default function Dashboard({ dices }: Props) {
   return (
-    <div className="grid grid-cols-4 gap-8">
+    <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-8">
       {dices
         ? dices.map((d: any) => (
             <Card key={d.id}>

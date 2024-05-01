@@ -18,8 +18,11 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        xs: "540px",
+      },
       maxWidth: {
-        "8xl": "128rem",
+        "8xl": "110rem",
       },
       colors: {
         border: "hsl(var(--border))",

@@ -77,19 +77,16 @@
 
 main,
 nav {
-  @apply max-w-8xl mx-auto my-12;
+  @apply max-w-8xl mx-auto my-12 px-4 lg:px-8;
 }
 p {
   @apply mt-2;
 }
 h1,
 .h1-style {
-  @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+  @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-4 xs:mb-0 xs:w-auto;
 }
 h2,
 .h2-style {
-  @apply scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
-}
-.navbar {
-  @apply flex justify-between items-center py-8 flex-1;
+  @apply scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl transition-colors first:mt-0 lg:px-16 px-4 xs:px-8;
 }

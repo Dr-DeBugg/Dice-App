@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="navbar">
-      <Link className="h2-style  justify-beginning" href="/about">
-        About
-      </Link>
-      <Link className="h1-style  text-center" href="/">
+    <nav className="flex flex-col xs:flex-row justify-between items-center py-8">
+      <Link className="h1-style" href="/">
         🎲 Dice App
       </Link>
-      <div className=" flex justify-end">
+      <div className="flex flex-row justify-between items-center w-full xs:w-auto">
+        <Link className="h2-style" href="/about">
+          About
+        </Link>
         <ModeToggle />
       </div>
     </nav>
