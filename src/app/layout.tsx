@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/ui/navbar";
-import { Toaster } from "@/src/components/shadcn/toaster";
+import { Toaster } from "@/components/shadcn/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 

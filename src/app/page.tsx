@@ -1,13 +1,16 @@
-import Dashboard from "@/components/ui/dashboard";
 import { getAllDices } from "@/lib/api/requests";
+import { DataTable } from "../components/ui/data-table";
+import { Die, columns } from "./columns";
 
 export default async function Home() {
   const response = await getAllDices();
-  const data = await response.json();
+  const dices = (await response.json()).dices as Die[];
 
   return (
     <main>
-      <Dashboard dices={data.dices} />
+      <div className="container mx-auto py-10">
+        <DataTable columns={columns} data={dices} />
+      </div>
     </main>
   );
 }

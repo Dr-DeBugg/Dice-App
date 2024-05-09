@@ -14,7 +14,7 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { deleteDie } from "@/lib/api/requests";
-import { useToast } from "@/src/components/shadcn/use-toast";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export type Die = {
   id: string;
