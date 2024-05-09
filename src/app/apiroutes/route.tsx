@@ -1,16 +1,25 @@
-"use server";
-
 import { sql } from "@vercel/postgres";
-import { unstable_noStore } from "next/cache";
 import { NextResponse } from "next/server";
 
-export async function getAllDices() {
-  //TODO: test if this does anything in build version
-  unstable_noStore();
+// export async function GET(){
+//     return Response.json(dices);
+//   try {
+//     if (!name || !sides) throw new Error('Name and Sides required');
+//     await sql`INSERT INTO Dices (Id, Name, Sides) VALUES ( gen_random_uuid (), ${name}, ${sides});`;
+//   } catch (error) {
+//     return NextResponse.json({ error }, { status: 500 });
+//   }
+
+//   const dices = await sql`SELECT * FROM Dices;`;
+//   return NextResponse.json({ dices }, { status: 200 });
+// }
+
+export async function GET() {
   try {
     const result = await sql`SELECT * FROM dices;`;
 
     if (result.rows.length === 0) return nextResponse({ message: "No dices found." }, 404);
+
     return nextResponse({ dices: result.rows }, 200);
   } catch (error) {
     console.error("Failed to fetch dices:", error);
@@ -34,39 +43,25 @@ export async function POST(req: Request) {
   return nextResponse({ message: `Succesfully added die named ${data.name}` }, 200);
 }
 
-export async function deleteDie(id: string) {
-  if (!id) return { error: "Missing data: id required." };
+export async function DELETE(req: Request) {
+  const data = await req.json();
+
+  if (!data?.id) return nextResponse({ error: "Missing data: id required" }, 400);
 
   try {
-    const result = await sql`DELETE FROM dices WHERE id = ${id}`;
+    const result = await sql`DELETE FROM dices WHERE id = ${data.id}`;
 
     if (result.rowCount === 1) {
-      return { message: "Successfully removed a die!" };
+      return nextResponse({ message: "Successfully removed a die" }, 200);
     }
 
-    return { error: "Die not found or already deleted." };
+    return nextResponse({ error: "Die not found or already deleted" }, 404);
   } catch (error) {
     console.error(error);
-    return { error: "Internal server error." };
+    return nextResponse({ error: "Internal server error" }, 500);
   }
 }
 
 function nextResponse(response: object, statusCode: number) {
   return NextResponse.json(response, { status: statusCode });
 }
-
-// export async function GET(request: Request) {
-//   const { searchParams } = new URL(request.url);
-//   const name = searchParams.get('name');
-//   const sides = searchParams.get('sides');
-
-//   try {
-//     if (!name || !sides) throw new Error('Name and Sides required');
-//     await sql`INSERT INTO Dices (Id, Name, Sides) VALUES ( gen_random_uuid (), ${name}, ${sides});`;
-//   } catch (error) {
-//     return NextResponse.json({ error }, { status: 500 });
-//   }
-
-//   const dices = await sql`SELECT * FROM Dices;`;
-//   return NextResponse.json({ dices }, { status: 200 });
-// }

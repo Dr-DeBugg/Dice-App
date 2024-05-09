@@ -1,36 +1,19 @@
-import { Payment, columns } from "./columns";
+import { getAllDices } from "@/lib/api/requests";
+import { Die, columns } from "./columns";
 import { DataTable } from "./data-table";
 
-async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52g",
-      amount: 100,
-      status: "success",
-      email: "hmm@example.com",
-    },
-    {
-      id: "728ed52h",
-      amount: 100000,
-      status: "failed",
-      email: "hmm@hmm.com",
-    },
-  ];
+async function getData(): Promise<Die[]> {
+  const response = await getAllDices();
+  const dices = (await response.json()).dices as Die[];
+  return dices;
 }
 
 export default async function DemoPage() {
-  const data = await getData();
+  const dices = await getData();
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={dices} />
     </div>
   );
 }
