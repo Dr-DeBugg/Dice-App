@@ -1,56 +1,51 @@
-import React from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/shadcn/card";
-import { ModeToggle } from "@/components/shadcn/themeToggle";
-import { getAllDices } from "@/lib/api/requests";
+"use client";
 
-type Props = {
-  dices: any[];
-};
+import React, { useCallback, useMemo } from "react";
+import { DataTable } from "./data-table";
+import { Die, getDiceColumns } from "@/components/ui/columns";
+import { toast } from "../shadcn/use-toast";
+import { deleteDie } from "@/lib/api/requests";
 
-export const getServerSideProps = async () => {
-  try {
-    const dices = await getAllDices();
-    return {
-      props: {
-        dices,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        dices: [],
-        error: "Failed to fetch posts.",
-      },
-    };
+interface DicesResponse {
+  resp: {
+    error?: string;
+    dices: Die[];
+  };
+}
+
+export default function Dashboard({ resp }: DicesResponse) {
+  if (resp.error) {
+    toast({
+      variant: "destructive",
+      description: resp.error,
+    });
   }
-};
 
-export default function Dashboard({ dices }: Props) {
+  const onDelete = useCallback(async (id: string) => {
+    const resp = await deleteDie(id);
+    toast({
+      variant: resp?.error ? "destructive" : "success",
+      description: resp?.error ? resp.error : resp?.message,
+    });
+  }, []);
+
+  const onPreview = useCallback((_id: string) => {
+    toast({
+      description: "Under construction...",
+    });
+  }, []);
+
+  const onRoll = useCallback((_id: string) => {
+    toast({
+      description: "Under construction...",
+    });
+  }, []);
+
+  const columns = useMemo(() => getDiceColumns({ onDelete, onPreview, onRoll }), []);
+
   return (
-    <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-8">
-      {dices
-        ? dices.map((d: any) => (
-            <Card key={d.id}>
-              <CardHeader>
-                <div>
-                  <CardTitle>Name of the die is {d.name}</CardTitle>
-                  <CardDescription>gkdsgokk</CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {d.name} has {d.sided} sides
-              </CardContent>
-              <CardFooter>this is the footer</CardFooter>
-            </Card>
-          ))
-        : ""}
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={resp.dices} />
     </div>
   );
 }

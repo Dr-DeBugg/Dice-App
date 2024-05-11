@@ -1,8 +1,13 @@
 "use server";
 
+import { Die } from "@/components/ui/columns";
 import { sql } from "@vercel/postgres";
-import { unstable_noStore } from "next/cache";
+import { revalidatePath, unstable_noStore } from "next/cache";
 import { NextResponse } from "next/server";
+
+function createDiceResponse(dices: Die[], error?: string) {
+  return { error, dices };
+}
 
 export async function getAllDices() {
   //TODO: test if this does anything in build version
@@ -10,11 +15,13 @@ export async function getAllDices() {
   try {
     const result = await sql`SELECT * FROM dices;`;
 
-    if (result.rows.length === 0) return nextResponse({ message: "No dices found." }, 404);
-    return nextResponse({ dices: result.rows }, 200);
+    if (result.rows.length === 0) {
+      return createDiceResponse([], "No dices found.");
+    }
+    return createDiceResponse(result.rows as Die[]);
   } catch (error) {
     console.error("Failed to fetch dices:", error);
-    return nextResponse({ error: "Internal Server Error" }, 500);
+    return createDiceResponse([], "Internal Server Error");
   }
 }
 
@@ -41,6 +48,7 @@ export async function deleteDie(id: string) {
     const result = await sql`DELETE FROM dices WHERE id = ${id}`;
 
     if (result.rowCount === 1) {
+      revalidatePath("");
       return { message: "Successfully removed a die!" };
     }
 
