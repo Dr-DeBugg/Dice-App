@@ -44,8 +44,10 @@ export default function Dashboard({ resp }: DicesResponse) {
   const columns = useMemo(() => getDiceColumns({ onDelete, onPreview, onRoll }), []);
 
   return (
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={resp.dices} />
+    <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
+      <div className="container mx-auto py-10">
+        <DataTable columns={columns} data={resp.dices} />
+      </div>
     </div>
   );
 }
