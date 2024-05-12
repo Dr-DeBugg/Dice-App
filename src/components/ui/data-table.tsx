@@ -16,9 +16,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
-import React from "react";
+import React, { useCallback } from "react";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { DataTablePagination } from "./data-table-pagination";
+import { toast } from "../shadcn/use-toast";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -39,9 +40,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     },
   });
 
+  const onAdd = useCallback(() => {
+    toast({
+      description: "Under construction...",
+    });
+  }, []);
+
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      <DataTableToolbar onAdd={onAdd} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
