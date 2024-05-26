@@ -82,11 +82,9 @@ nav {
 p {
   @apply mt-2;
 }
-h1,
 .h1-style {
   @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-4 xs:mb-0 xs:w-auto;
 }
-h2,
 .h2-style {
   @apply scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl transition-colors first:mt-0 lg:px-16 px-0 xs:px-8;
 }

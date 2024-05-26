@@ -24,10 +24,8 @@ export function DataTableRowActions({ rowId, onDelete, onPreview, onRoll }: RowA
   return (
     <DropdownMenu open={open} onOpenChange={(open) => setOpen(open)}>
       <DropdownMenuTrigger onPointerDown={(e) => e.preventDefault()} onClick={() => setOpen(!open)}>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
+        <span className="sr-only">Open menu</span>
+        <MoreHorizontal className="h-4 w-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
