@@ -53,7 +53,7 @@ export function NewDieDialog({ closeModal, isModalOpen }: NewDieDialogProps) {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
-      title: "You submitted the following values:",
+      title: "Saving not implemented yet. Submitted values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
@@ -68,7 +68,7 @@ export function NewDieDialog({ closeModal, isModalOpen }: NewDieDialogProps) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <DialogHeader>
-              <DialogTitle>Add new die</DialogTitle>
+              <DialogTitle style={{ textAlign: "center" }}>Add new die</DialogTitle>
             </DialogHeader>
 
             <FormField
