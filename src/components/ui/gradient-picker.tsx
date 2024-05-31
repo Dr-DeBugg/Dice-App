@@ -1,12 +1,13 @@
 "use client";
 
-import { Paintbrush } from "lucide-react";
+import { Paintbrush, X } from "lucide-react";
 import { useMemo } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../shadcn/popover";
 import { Button } from "../shadcn/button";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shadcn/tabs";
 import { Input } from "../shadcn/input";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 export function GradientPicker({
   background,
@@ -26,11 +27,17 @@ export function GradientPicker({
     "#70e2ff",
     "#cd93ff",
     "#09203f",
+    "#7c4dff",
+    "#00bcd4",
+    "#ff1744",
+    "#00c853",
+    "#6200ea",
+    "#8B572A",
   ];
 
   const defaultTab = useMemo(() => {
     if (background.includes("url")) return "image";
-    if (background.includes("gradient")) return "gradient";
+    if (background.includes("solid")) return "solid";
     return "solid";
   }, [background]);
 
@@ -48,7 +55,7 @@ export function GradientPicker({
           <div className="w-full flex items-center gap-2">
             {background ? (
               <div
-                className="h-4 w-4 rounded !bg-center !bg-cover transition-all"
+                className="h-5 w-5 rounded !bg-center !bg-cover transition-all"
                 style={{ background }}
               ></div>
             ) : (
@@ -58,26 +65,21 @@ export function GradientPicker({
           </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-64">
+      <PopoverContent className="w-64 pt-12 translate-x-2">
+        <PopoverClose asChild>
+          <X className="h-4 w-4 absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"></X>
+        </PopoverClose>
         <Tabs defaultValue={defaultTab} className="w-full">
-          <TabsList className="w-full mb-4">
-            <TabsTrigger className="flex-1" value="solid">
-              Solid
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="solid" className="flex flex-wrap gap-1 mt-0">
+          <TabsContent value="solid" className="flex flex-wrap gap-2 mt-0">
             {solids.map((s) => (
               <div
                 key={s}
                 style={{ background: s }}
-                className="rounded-md h-6 w-6 cursor-pointer active:scale-105"
+                className="rounded-md h-6 w-6 cursor-pointer active:scale-95"
                 onClick={() => setBackground(s)}
               />
             ))}
           </TabsContent>
-
-          <TabsContent value="gradient" className="mt-0"></TabsContent>
         </Tabs>
 
         <Input
