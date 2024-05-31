@@ -3,10 +3,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { ColorCube } from "./color-circle";
 
 export type Die = {
   id: string;
-  name: string;
+  color: string;
   sides: number;
 };
 
@@ -41,8 +42,9 @@ export const getDiceColumns = ({
     ),
   },
   {
-    accessorKey: "name",
-    header: "Name",
+    accessorKey: "color",
+    header: "Color",
+    cell: ({ row }) => <ColorCube color={row.original.color} />,
   },
   {
     accessorKey: "sides",
