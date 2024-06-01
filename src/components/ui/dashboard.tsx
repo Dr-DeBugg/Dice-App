@@ -41,7 +41,10 @@ export default function Dashboard({ resp }: DicesResponse) {
     });
   }, []);
 
-  const columns = useMemo(() => getDiceColumns({ onDelete, onPreview, onRoll }), []);
+  const columns = useMemo(
+    () => getDiceColumns({ onDelete, onPreview, onRoll }),
+    [onDelete, onPreview, onRoll]
+  );
 
   return (
     <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
