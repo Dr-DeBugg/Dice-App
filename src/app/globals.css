@@ -122,3 +122,9 @@ p {
 .bottom {
   transform: rotateX(-90deg) translateZ(14px);
 }
+
+#dice-box canvas {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
