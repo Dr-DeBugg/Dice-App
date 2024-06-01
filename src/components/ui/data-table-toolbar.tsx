@@ -28,7 +28,7 @@ export function DataTableToolbar() {
   }, []);
 
   return (
-    <div className="flex items-center justify-between" id="dice-box">
+    <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2 p">
         <h3 className="text-2xl font-bold tracking-tight h-8 pr-2">Dices</h3>
         <NewDieDialog closeModal={closeModal} isModalOpen={isModalOpen} />
