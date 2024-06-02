@@ -5,6 +5,7 @@ import DiceBox from "@3d-dice/dice-box";
 import { Die } from "./columns";
 import { toast } from "../shadcn/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { Button } from "../shadcn/button";
 
 export function ThrowDice({ row }: { row: Die }) {
   const [diceBox, setDiceBox] = useState(null as any);
@@ -38,8 +39,7 @@ export function ThrowDice({ row }: { row: Die }) {
         })
         .then((results: { value: any }[]) => {
           toast({
-            variant: "success",
-            description: `You rolled ${results[0].value}`,
+            title: `Roll result: ${results[0].value}`,
           });
         });
     }
@@ -52,10 +52,10 @@ export function ThrowDice({ row }: { row: Die }) {
   };
 
   return (
-    <div>
-      <button onClick={handleReRoll} style={{ marginTop: "20px" }}>
-        Reroll Dice
-      </button>
+    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+      <Button variant="ghost" onClick={handleReRoll}>
+        <ReloadIcon className="h-6 w-6" />
+      </Button>
     </div>
   );
 }
