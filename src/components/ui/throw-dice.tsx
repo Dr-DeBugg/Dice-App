@@ -30,7 +30,7 @@ export function ThrowDice({ row }: { row: Die }) {
     });
   }, []);
 
-  const rollDice = (box: never) => {
+  const rollDice = (box: any) => {
     if (box) {
       box
         .roll([`1d${row.sides}`], {
