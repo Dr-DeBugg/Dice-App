@@ -44,7 +44,7 @@ export function DataTableRowActions({ row, onDelete, onPreview, onRoll }: RowAct
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => onDelete(row.id)}>Delete</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onDelete(row.id)}>Delete - disabled</DropdownMenuItem>
           <DropdownMenuItem onClick={() => openModal()}>Roll</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

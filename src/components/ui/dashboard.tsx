@@ -4,7 +4,7 @@ import React, { useCallback, useMemo } from "react";
 import { DataTable } from "./data-table";
 import { Die, getDiceColumns } from "@/components/ui/columns";
 import { toast } from "../shadcn/use-toast";
-import { deleteDie } from "@/lib/api/requests";
+// import { deleteDie } from "@/lib/api/requests";
 
 interface DicesResponse {
   resp: {
@@ -22,10 +22,14 @@ export default function Dashboard({ resp }: DicesResponse) {
   }
 
   const onDelete = useCallback(async (id: string) => {
-    const resp = await deleteDie(id);
+    // const resp = await deleteDie(id);
+    // toast({
+    //   variant: resp?.error ? "destructive" : "success",
+    //   description: resp?.error ? resp.error : resp?.message,
+    // });
     toast({
-      variant: resp?.error ? "destructive" : "success",
-      description: resp?.error ? resp.error : resp?.message,
+      variant: "destructive",
+      description: "Disabled",
     });
   }, []);
 
