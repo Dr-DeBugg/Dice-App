@@ -54,7 +54,7 @@ export const getDiceColumns = ({
     id: "actions",
     cell: ({ row }) => (
       <DataTableRowActions
-        rowId={row.original.id}
+        row={row.original}
         onDelete={onDelete}
         onPreview={onPreview}
         onRoll={onRoll}

@@ -1,6 +1,4 @@
 import { MoreHorizontal } from "lucide-react";
-
-import { Button } from "@/components/shadcn/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,33 +7,53 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { Die } from "./columns";
+import { Dialog, DialogContent } from "../shadcn/dialog";
+import { ThrowDice } from "./throw-dice";
 
 type RowActionsProps = {
-  rowId: string;
+  row: Die;
   onRoll: (id: string) => void;
   onPreview: (id: string) => void;
   onDelete: (id: string) => void;
 };
 
-export function DataTableRowActions({ rowId, onDelete, onPreview, onRoll }: RowActionsProps) {
+export function DataTableRowActions({ row, onDelete, onPreview, onRoll }: RowActionsProps) {
   const [open, setOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
   return (
-    <DropdownMenu open={open} onOpenChange={(open) => setOpen(open)}>
-      <DropdownMenuTrigger onPointerDown={(e) => e.preventDefault()} onClick={() => setOpen(!open)}>
-        <span className="sr-only">Open menu</span>
-        <MoreHorizontal className="h-4 w-4" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => onDelete(rowId)}>Delete</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onPreview(rowId)}>
-          Preview - not implementd
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onRoll(rowId)}>Roll - not implemented</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu open={open} onOpenChange={(open) => setOpen(open)}>
+        <DropdownMenuTrigger
+          onPointerDown={(e) => e.preventDefault()}
+          onClick={() => setOpen(!open)}
+        >
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => onDelete(row.id)}>Delete</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => openModal()}>Roll</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <Dialog open={isModalOpen} onOpenChange={closeModal}>
+        <DialogContent className="sm:max-w-[425px] p-2">
+          <div id="dice-box" className="responsive-dice-box"></div>
+          <ThrowDice row={row} />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

@@ -1,65 +1,61 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
+import { Die } from "./columns";
+import { toast } from "../shadcn/use-toast";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
-// interface NewDieDialogProps {
-//   closeModal: () => void;
-//   isModalOpen: boolean;
-// }
-
-export function ThrowDice() {
+export function ThrowDice({ row }: { row: Die }) {
   const [diceBox, setDiceBox] = useState(null as any);
 
-  // Colors for dice
-  const colors = [
-    "#348888",
-    "#22BABB",
-    "#9EF8EE",
-    "#FA7F08",
-    "#F24405",
-    "#F25EB0",
-    "#B9BF04",
-    "#F2B705",
-    "#F27405",
-    "#F23005",
-  ];
-
-  // Function to get a random color
-  const getRandomColor = () => {
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
   useEffect(() => {
-    // Initialize DiceBox when the component mounts
     const box = new DiceBox("#dice-box", {
       assetPath: "assets/",
       origin: "https://unpkg.com/@3d-dice/dice-box@1.0.8/dist/",
       theme: "default",
       themeColor: "#feea03",
-      offscreen: true,
+      friction: 1,
+      restitution: 0.5,
+      startingHeight: 10,
+      throwForce: 10,
+      spinForce: 15,
+      offscreen: false,
       scale: 9,
     });
 
-    console.log("hmm");
-
-    // box.init();
-
     box.init().then(() => {
-      // You could set up additional setup here if needed
       setDiceBox(box);
-      // Optionally roll some dice initially
-      box.roll(["2d20"]);
+      rollDice(box);
     });
   }, []);
 
-  // const handleRollClick = () => {
-  //   if (diceBox) {
-  //     diceBox.roll(["4d20"], {
-  //       themeColor: getRandomColor(),
-  //     });
-  //   }
-  // };
-  return <></>;
-  // return <button onClick={handleRollClick}>Roll Em!</button>;
+  const rollDice = (box: never) => {
+    if (box) {
+      box
+        .roll([`1d${row.sides}`], {
+          themeColor: row.color,
+        })
+        .then((results: { value: any }[]) => {
+          toast({
+            variant: "success",
+            description: `You rolled ${results[0].value}`,
+          });
+        });
+    }
+  };
+
+  const handleReRoll = () => {
+    if (diceBox) {
+      rollDice(diceBox);
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={handleReRoll} style={{ marginTop: "20px" }}>
+        Reroll Dice
+      </button>
+    </div>
+  );
 }
