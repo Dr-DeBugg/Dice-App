@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
 import { Die } from "./columns";
 import { toast } from "../shadcn/use-toast";
@@ -15,11 +15,11 @@ export function ThrowDice({ row }: { row: Die }) {
       assetPath: "assets/",
       origin: "https://unpkg.com/@3d-dice/dice-box@1.0.8/dist/",
       theme: "default",
-      gravity: 0.8,
-      friction: 0.35,
+      gravity: 0.85,
+      friction: 0.4,
       restitution: 0.5,
       startingHeight: 10,
-      throwForce: 10,
+      throwForce: 12,
       spinForce: 15,
       offscreen: false,
       scale: 9,

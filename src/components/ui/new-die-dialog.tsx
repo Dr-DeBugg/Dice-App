@@ -14,52 +14,38 @@ import {
 } from "../shadcn/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../shadcn/select";
 import { useForm } from "react-hook-form";
-import { toast } from "../shadcn/use-toast";
 import { z } from "zod";
 import { useState } from "react";
 import { GradientPicker } from "./gradient-picker";
+import { onSubmitAction } from "@/lib/api/requests";
+import { schema } from "@/lib/schema";
+import { toast } from "../shadcn/use-toast";
 
 interface NewDieDialogProps {
   closeModal: () => void;
   isModalOpen: boolean;
 }
 
-const hexColorRegex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
-
-const FormSchema = z.object({
-  sides: z.string({
-    required_error: "Please select a side count.",
-  }),
-  color: z
-    .string()
-    .trim()
-    .min(1, {
-      message: "Please pick a color.",
-    })
-    .refine((val) => hexColorRegex.test(val), {
-      message: "Invalid hex color code.",
-    }),
-});
-
 export function NewDieDialog({ closeModal, isModalOpen }: NewDieDialogProps) {
   const [background, setBackground] = useState("");
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
     mode: "onChange",
   });
 
   const { isValid, isSubmitting } = form.formState;
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.output<typeof schema>) {
+    const formData = new FormData();
+    formData.append("sides", data.sides);
+    formData.append("color", data.color);
+    const resp = await onSubmitAction(formData);
     toast({
-      title: "Saving not implemented yet. Submitted values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      variant: resp.message.includes("Error") ? "destructive" : "success",
+      description: resp.message,
     });
+    closeModal();
   }
 
   return (

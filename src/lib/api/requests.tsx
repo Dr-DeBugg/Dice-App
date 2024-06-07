@@ -4,6 +4,7 @@ import { Die } from "@/components/ui/columns";
 import { sql } from "@vercel/postgres";
 import { revalidatePath, unstable_noStore } from "next/cache";
 import { NextResponse } from "next/server";
+import { schema } from "../schema";
 
 function createDiceResponse(dices: Die[], error?: string) {
   return { error, dices };
@@ -13,7 +14,7 @@ export async function getAllDices() {
   //TODO: test if this does anything in build version
   unstable_noStore();
   try {
-    const result = await sql`SELECT * FROM dices;`;
+    const result = await sql`SELECT * FROM dices ORDER BY created_at DESC;`;
 
     if (result.rows.length === 0) {
       return createDiceResponse([], "No dices found.");
@@ -22,6 +23,31 @@ export async function getAllDices() {
   } catch (error) {
     console.error("Failed to fetch dices:", error);
     return createDiceResponse([], "Internal Server Error");
+  }
+}
+
+export type FormState = {
+  message: string;
+};
+
+export async function onSubmitAction(data: FormData): Promise<FormState> {
+  const formData = Object.fromEntries(data);
+  const parsed = schema.safeParse(formData);
+
+  if (!parsed.success) {
+    return {
+      message: "Error: Invalid form data",
+    };
+  }
+
+  const die = parsed.data;
+
+  try {
+    await sql`INSERT INTO Dices (Id, Color, Sides) VALUES ( gen_random_uuid (), ${die.color}, ${die.sides});`;
+    revalidatePath("/");
+    return { message: "Added new 🎲" };
+  } catch (e) {
+    return { message: "Error: Failed to create 🎲" };
   }
 }
 

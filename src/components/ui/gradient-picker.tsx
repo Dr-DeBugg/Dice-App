@@ -1,11 +1,10 @@
 "use client";
 
 import { Paintbrush, X } from "lucide-react";
-import { useMemo } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../shadcn/popover";
 import { Button } from "../shadcn/button";
 import { cn } from "@/lib/utils";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../shadcn/tabs";
+import { Tabs, TabsContent } from "../shadcn/tabs";
 import { Input } from "../shadcn/input";
 import { PopoverClose } from "@radix-ui/react-popover";
 
@@ -35,12 +34,6 @@ export function GradientPicker({
     "#8B572A",
   ];
 
-  const defaultTab = useMemo(() => {
-    if (background.includes("url")) return "image";
-    if (background.includes("solid")) return "solid";
-    return "solid";
-  }, [background]);
-
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -69,7 +62,7 @@ export function GradientPicker({
         <PopoverClose asChild>
           <X className="h-4 w-4 absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"></X>
         </PopoverClose>
-        <Tabs defaultValue={defaultTab} className="w-full">
+        <Tabs defaultValue="solid" className="w-full">
           <TabsContent value="solid" className="flex flex-wrap gap-2 mt-0">
             {solids.map((s) => (
               <div
