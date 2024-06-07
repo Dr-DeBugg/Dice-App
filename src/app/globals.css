@@ -89,38 +89,12 @@ p {
   @apply scroll-m-20 text-3xl font-semibold tracking-tight lg:text-4xl transition-colors first:mt-0 lg:px-16 px-0 xs:px-8;
 }
 
-.cube {
-  position: relative;
-  width: 28px;
-  height: 28px;
-  transform-style: preserve-3d;
-  transform: rotateX(-30deg) rotateY(-45deg);
+.colorIndicator {
+  transition: box-shadow 0.1s ease-in-out;
 }
 
-.face {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  border: 1px solid #ccc;
-}
-
-.front {
-  transform: translateZ(14px);
-}
-.back {
-  transform: rotateY(180deg) translateZ(14px);
-}
-.right {
-  transform: rotateY(90deg) translateZ(14px);
-}
-.left {
-  transform: rotateY(-90deg) translateZ(14px);
-}
-.top {
-  transform: rotateX(90deg) translateZ(14px);
-}
-.bottom {
-  transform: rotateX(-90deg) translateZ(14px);
+.colorIndicator:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
 #dice-box canvas {

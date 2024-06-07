@@ -81,10 +81,10 @@ export function GradientPicker({
             ))}
           </TabsContent>
         </Tabs>
-
         <Input
           id="custom"
           value={background}
+          placeholder="you can also type a HEX"
           className="col-span-2 h-8 mt-4"
           onChange={(e) => setBackground(e.currentTarget.value)}
         />
