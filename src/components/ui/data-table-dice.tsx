@@ -28,6 +28,8 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTableDice<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+  //opt out of react compiler, causes rows not to be selectable in table
+  "use no memo";
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
