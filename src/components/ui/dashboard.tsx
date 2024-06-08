@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useCallback, useMemo } from "react";
-import { DataTable } from "./data-table";
+import { DataTableDice } from "./data-table-dice";
 import { Die, getDiceColumns } from "@/components/ui/columns";
 import { toast } from "../shadcn/use-toast";
 import { deleteDie } from "@/lib/api/requests";
+import { DataTableGroup } from "./data-table-group";
 
 interface DicesResponse {
   resp: {
@@ -14,13 +15,6 @@ interface DicesResponse {
 }
 
 export default function Dashboard({ resp }: DicesResponse) {
-  if (resp.error) {
-    toast({
-      variant: "destructive",
-      description: resp.error,
-    });
-  }
-
   const onDelete = useCallback(async (id: string) => {
     const resp = await deleteDie(id);
     toast({
@@ -29,28 +23,21 @@ export default function Dashboard({ resp }: DicesResponse) {
     });
   }, []);
 
-  const onPreview = useCallback((_id: string) => {
-    toast({
-      description: "Under construction...",
-    });
-  }, []);
-
-  const onRoll = useCallback((_id: string) => {
-    toast({
-      description: "Under construction...",
-    });
-  }, []);
-
-  const columns = useMemo(
-    () => getDiceColumns({ onDelete, onPreview, onRoll }),
-    [onDelete, onPreview, onRoll]
-  );
+  const columns = useMemo(() => getDiceColumns({ onDelete }), [onDelete]);
 
   return (
-    <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
-      <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={resp.dices} />
+    <>
+      <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
+        <div className="container mx-auto py-10">
+          <DataTableDice columns={columns} data={resp.dices} />
+        </div>
       </div>
-    </div>
+      <div className="py-10"></div>
+      <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
+        <div className="container mx-auto py-10">
+          <DataTableGroup columns={columns} data={resp.dices} />
+        </div>
+      </div>
+    </>
   );
 }

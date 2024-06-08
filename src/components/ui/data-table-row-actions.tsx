@@ -14,12 +14,10 @@ import { ThrowDice } from "./throw-dice";
 
 type RowActionsProps = {
   row: Die;
-  onRoll: (id: string) => void;
-  onPreview: (id: string) => void;
   onDelete: (id: string) => void;
 };
 
-export function DataTableRowActions({ row, onDelete, onPreview, onRoll }: RowActionsProps) {
+export function DataTableRowActions({ row, onDelete }: RowActionsProps) {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -12,16 +12,10 @@ export type Die = {
 };
 
 type DiceColumnsProps = {
-  onRoll: (id: string) => void;
-  onPreview: (id: string) => void;
   onDelete: (id: string) => void;
 };
 
-export const getDiceColumns = ({
-  onDelete,
-  onPreview,
-  onRoll,
-}: DiceColumnsProps): ColumnDef<Die>[] => [
+export const getDiceColumns = ({ onDelete }: DiceColumnsProps): ColumnDef<Die>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -50,18 +44,11 @@ export const getDiceColumns = ({
     accessorKey: "sides",
     header: "Sides",
     cell: ({ row }) => {
-      return <div className="ml-3 text-lg">{row.original.sides}</div>;
+      return <div className="ml-2 text-lg">{row.original.sides}</div>;
     },
   },
   {
     id: "actions",
-    cell: ({ row }) => (
-      <DataTableRowActions
-        row={row.original}
-        onDelete={onDelete}
-        onPreview={onPreview}
-        onRoll={onRoll}
-      />
-    ),
+    cell: ({ row }) => <DataTableRowActions row={row.original} onDelete={onDelete} />,
   },
 ];

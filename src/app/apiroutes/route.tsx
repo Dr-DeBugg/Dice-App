@@ -1,17 +1,16 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
-// export async function GET() {
-//   try {
-//     await sql`ALTER TABLE dices
-//     ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`;
-//   } catch (error) {
-//     return NextResponse.json({ error }, { status: 500 });
-//   }
+export async function GET() {
+  try {
+    await sql`DELETE FROM dices;`;
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
 
-//   const dices = await sql`SELECT * FROM Dices;`;
-//   return NextResponse.json({ dices }, { status: 200 });
-// }
+  const dices = await sql`SELECT * FROM Dices;`;
+  return NextResponse.json({ dices }, { status: 200 });
+}
 
 // UPDATE your_table_name SET Color = 'default_value' WHERE Color IS NULL;
 // ALTER TABLE your_table_name DROP COLUMN name;
