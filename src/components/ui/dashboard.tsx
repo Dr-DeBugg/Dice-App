@@ -33,11 +33,11 @@ export default function Dashboard({ resp }: DicesResponse) {
         </div>
       </div>
       <div className="py-10"></div>
-      <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
+      {/* <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
         <div className="container mx-auto py-10">
           <DataTableGroup columns={columns} data={resp.dices} />
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
