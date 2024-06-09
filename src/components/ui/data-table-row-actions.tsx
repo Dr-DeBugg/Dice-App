@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Die } from "./columns";
 import { Dialog, DialogContent } from "../shadcn/dialog";
 import { ThrowDice } from "./throw-dice";
@@ -21,13 +21,13 @@ export function DataTableRowActions({ row, onDelete }: RowActionsProps) {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = useCallback(() => {
+  const openModal = () => {
     setIsModalOpen(true);
-  }, []);
+  };
 
-  const closeModal = useCallback(() => {
+  const closeModal = () => {
     setIsModalOpen(false);
-  }, []);
+  };
 
   return (
     <>

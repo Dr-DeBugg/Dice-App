@@ -3,9 +3,10 @@
 import { Button } from "../shadcn/button";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { NewDieDialog } from "./new-die-dialog";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { Row } from "@tanstack/react-table";
 import { Die } from "./columns";
+import { toast } from "../shadcn/use-toast";
 
 interface DataTableToolbarProps {
   selectedRows: Row<Die>[];
@@ -14,13 +15,13 @@ interface DataTableToolbarProps {
 export function DataTableToolbar({ selectedRows }: DataTableToolbarProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = useCallback(() => {
+  const openModal = () => {
     setIsModalOpen(true);
-  }, []);
+  };
 
-  const closeModal = useCallback(() => {
+  const closeModal = () => {
     setIsModalOpen(false);
-  }, []);
+  };
 
   return (
     <div className="flex items-center justify-between">
@@ -34,7 +35,11 @@ export function DataTableToolbar({ selectedRows }: DataTableToolbarProps) {
         <Button
           variant="outline"
           disabled={selectedRows.length < 2}
-          onClick={openModal}
+          onClick={() => {
+            toast({
+              description: "Not implemented yet.",
+            });
+          }}
           className="h-8 px-2 lg:px-3"
         >
           Add to group

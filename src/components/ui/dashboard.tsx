@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useCallback, useMemo } from "react";
+import React from "react";
 import { DataTableDice } from "./data-table-dice";
 import { Die, getDiceColumns } from "@/components/ui/columns";
 import { toast } from "../shadcn/use-toast";
 import { deleteDie } from "@/lib/api/requests";
-import { DataTableGroup } from "./data-table-group";
+// import { DataTableGroup } from "./data-table-group";
 
 interface DicesResponse {
   resp: {
@@ -15,15 +15,15 @@ interface DicesResponse {
 }
 
 export default function Dashboard({ resp }: DicesResponse) {
-  const onDelete = useCallback(async (id: string) => {
+  const onDelete = async (id: string) => {
     const resp = await deleteDie(id);
     toast({
       variant: resp?.error ? "destructive" : "success",
       description: resp?.error ? resp.error : resp?.message,
     });
-  }, []);
+  };
 
-  const columns = useMemo(() => getDiceColumns({ onDelete }), [onDelete]);
+  const columns = getDiceColumns({ onDelete });
 
   return (
     <>

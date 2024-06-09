@@ -13,13 +13,14 @@ interface DataTablePaginationProps<TData> {
 }
 
 export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
+  const selectedRows = table.getFilteredSelectedRowModel().rows.length;
+  const totalRows = table.getFilteredRowModel().rows.length;
+  const message = selectedRows < 2 ? "Select at least two to add a group." : "";
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length < 2
-          ? "Select two dice to add to group."
-          : `${table.getFilteredSelectedRowModel().rows.length} of
-        ${table.getFilteredRowModel().rows.length} row(s) selected.`}
+        {totalRows ? `${selectedRows} of ${totalRows} row(s) selected. ${message}` : ""}
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2"></div>
