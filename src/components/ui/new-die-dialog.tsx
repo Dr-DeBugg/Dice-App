@@ -45,6 +45,8 @@ export function NewDieDialog({ closeModal, isModalOpen }: NewDieDialogProps) {
       variant: resp.message.includes("Error") ? "destructive" : "success",
       description: resp.message,
     });
+    form.reset();
+    setBackground("");
     closeModal();
   }
 
