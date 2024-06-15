@@ -15,7 +15,7 @@ interface DataTablePaginationProps<TData> {
 export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
   const selectedRows = table.getFilteredSelectedRowModel().rows.length;
   const totalRows = table.getFilteredRowModel().rows.length;
-  const message = selectedRows < 2 ? "Select at least two to add a group." : "";
+  const message = selectedRows < 2 ? "Select at least two throw a group." : "";
 
   return (
     <div className="flex items-center justify-between">

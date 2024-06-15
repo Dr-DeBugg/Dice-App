@@ -2,13 +2,31 @@
 
 import { useEffect, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
-import { Die } from "./columns";
 import { toast } from "../shadcn/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
 
-export function ThrowDice({ row }: { row: Die }) {
+export function ThrowManyDice({ rows }: { rows: any }) {
   const [diceBox, setDiceBox] = useState(null as any);
+
+  function createDiceArray(rows: any[]) {
+    const countMap = {} as any;
+  
+    rows.forEach(row => {
+      const sides: string = row.original.sides;
+      if (countMap[sides]) {
+        countMap[sides]++;
+      } else {
+        countMap[sides] = 1;
+      }
+    });
+  
+    const resultArray = Object.keys(countMap)
+      .map(sides => `${countMap[sides]}d${sides}`);
+  
+    return resultArray;
+  }
+  
 
   useEffect(() => {
     const box = new DiceBox("#dice-box", {
@@ -32,11 +50,12 @@ export function ThrowDice({ row }: { row: Die }) {
   }, []);
 
   const rollDice = (box: any) => {
+    const diceString = createDiceArray(rows);
+
+    console.log("hmmm ", diceString)
     if (box) {
       box
-        .roll([`1d${row.sides}`], {
-          themeColor: row.color,
-        })
+        .roll(diceString)
         .then((results: { value: any }[]) => {
           toast({
             title: `Roll result: ${results[0].value}`,

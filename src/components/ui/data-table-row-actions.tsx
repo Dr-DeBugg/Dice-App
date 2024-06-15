@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Die } from "./columns";
 import { Dialog, DialogContent } from "../shadcn/dialog";
 import { ThrowDice } from "./throw-dice";
@@ -21,13 +21,14 @@ export function DataTableRowActions({ row, onDelete }: RowActionsProps) {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
+  const openModal = useCallback(() => {
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsModalOpen(false);
-  };
+  }, []);
+
 
   return (
     <>
@@ -47,9 +48,9 @@ export function DataTableRowActions({ row, onDelete }: RowActionsProps) {
         </DropdownMenuContent>
       </DropdownMenu>
       <Dialog open={isModalOpen} onOpenChange={closeModal}>
-        <DialogContent className="sm:max-w-[425px] p-2">
+        <DialogContent className="sm:max-w-[425px] p-2" >
           <div id="dice-box" className="responsive-dice-box"></div>
-          <ThrowDice row={row} />
+          <ThrowDice row={row}/>
         </DialogContent>
       </Dialog>
     </>
