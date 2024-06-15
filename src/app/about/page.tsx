@@ -9,7 +9,7 @@ export default function About() {
       <br></br>
       <h2>Tailwind CSS, utilizing Shadcn/ui components</h2>
       <br></br>
-      <h2>Frontend form and backend API validation with Zod</h2>
+      <h2>React-hook-form and validation for frontend and backend with Zod</h2>
       <br></br>
       <h2>
         Using React 19 and React compiler for memoization without useMemo/useCallback/React.memo

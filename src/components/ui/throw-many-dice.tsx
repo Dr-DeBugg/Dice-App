@@ -6,27 +6,48 @@ import { toast } from "../shadcn/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
 
-export function ThrowManyDice({ rows }: { rows: any }) {
-  const [diceBox, setDiceBox] = useState(null as any);
+type DiceRows = {
+  original: {
+    sides: number;
+    color: string;
+  };
+};
 
-  function createDiceArray(rows: any[]) {
-    const countMap = {} as any;
-  
-    rows.forEach(row => {
-      const sides: string = row.original.sides;
-      if (countMap[sides]) {
-        countMap[sides]++;
-      } else {
-        countMap[sides] = 1;
-      }
-    });
-  
-    const resultArray = Object.keys(countMap)
-      .map(sides => `${countMap[sides]}d${sides}`);
-  
-    return resultArray;
-  }
-  
+function createDiceArray(rows: DiceRows[]) {
+  const transformedArray = rows.map((row) => ({
+    sides: row.original.sides.toString(),
+    color: row.original.color,
+  }));
+
+  return transformedArray;
+}
+
+function calculateRollResult(rollResult: []) {
+  const initialAccumulator = { sum: 0, expression: "" };
+
+  const result = rollResult.reduce(
+    (
+      accumulator: { sum: number; expression: string },
+      currentValue: { value: number },
+      index: number
+    ) => {
+      accumulator.sum += currentValue.value;
+
+      index === 0
+        ? (accumulator.expression = `${currentValue.value}`)
+        : (accumulator.expression += ` + ${currentValue.value}`);
+
+      return accumulator;
+    },
+    initialAccumulator
+  );
+
+  const { sum, expression } = result;
+  return `${expression} = ${sum}`;
+}
+
+export function ThrowManyDice({ rows }: { rows: DiceRows[] }) {
+  const [diceBox, setDiceBox] = useState(null as unknown);
 
   useEffect(() => {
     const box = new DiceBox("#dice-box", {
@@ -46,21 +67,27 @@ export function ThrowManyDice({ rows }: { rows: any }) {
     box.init().then(() => {
       setDiceBox(box);
       rollDice(box);
+      box.onRollComplete = (rollResult: []) => {
+        const resultString = calculateRollResult(rollResult);
+
+        toast({
+          title: `${resultString}`,
+        });
+      };
     });
   }, []);
 
   const rollDice = (box: any) => {
-    const diceString = createDiceArray(rows);
+    const diceArray = createDiceArray(rows);
 
-    console.log("hmmm ", diceString)
     if (box) {
-      box
-        .roll(diceString)
-        .then((results: { value: any }[]) => {
-          toast({
-            title: `Roll result: ${results[0].value}`,
-          });
+      diceArray.forEach((data) => {
+        const { sides, color } = data;
+
+        box.roll([`1d${sides}`], {
+          themeColor: color,
         });
+      });
     }
   };
 
