@@ -4,6 +4,7 @@ import { HandIcon } from "@radix-ui/react-icons";
 import { Dialog, DialogContent } from "../shadcn/dialog";
 import { ThrowDice } from "./throw-dice";
 import { Die } from "./columns";
+import { Switch } from "../shadcn/switch";
 
 export const RollIndicator = ({ row }: { row: Die }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,6 +20,9 @@ export const RollIndicator = ({ row }: { row: Die }) => {
       </Button>
       <Dialog open={isModalOpen} onOpenChange={closeModal}>
         <DialogContent className="sm:max-w-[425px] p-2">
+        <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <Switch>Add </Switch>
+          </div>
           <div id="dice-box" className="responsive-dice-box"></div>
           <ThrowDice row={row} />
         </DialogContent>

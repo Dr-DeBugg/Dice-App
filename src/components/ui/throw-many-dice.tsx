@@ -13,6 +13,10 @@ type DiceRows = {
   };
 };
 
+export type Box = {
+  roll: ([], arg1: Object) => null
+}
+
 function createDiceArray(rows: DiceRows[]) {
   const transformedArray = rows.map((row) => ({
     sides: row.original.sides.toString(),
@@ -47,7 +51,7 @@ function calculateRollResult(rollResult: []) {
 }
 
 export function ThrowManyDice({ rows }: { rows: DiceRows[] }) {
-  const [diceBox, setDiceBox] = useState(null as unknown);
+  const [diceBox, setDiceBox] = useState(null);
 
   useEffect(() => {
     const box = new DiceBox("#dice-box", {
@@ -77,7 +81,7 @@ export function ThrowManyDice({ rows }: { rows: DiceRows[] }) {
     });
   }, []);
 
-  const rollDice = (box: any) => {
+  const rollDice = (box: Box) => {
     const diceArray = createDiceArray(rows);
 
     if (box) {

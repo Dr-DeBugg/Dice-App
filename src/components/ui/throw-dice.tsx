@@ -8,7 +8,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
 
 export function ThrowDice({ row }: { row: Die }) {
-  const [diceBox, setDiceBox] = useState(null as any);
+  const [diceBox, setDiceBox] = useState(null);
 
   useEffect(() => {
     const box = new DiceBox("#dice-box", {

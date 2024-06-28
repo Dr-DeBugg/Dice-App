@@ -25,7 +25,6 @@ export function DataTableToolbar({ selectedRows }: DataTableToolbarProps) {
     setIsThrowManyOpen(false);
   };
 
-
   const openAddModal = () => {
     setIsModalOpen(true);
   };
