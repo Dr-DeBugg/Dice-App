@@ -6,9 +6,16 @@ import { Die } from "./columns";
 import { toast } from "../shadcn/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
+import { Box, calculateRollResult } from "./throw-many-dice";
 
-export function ThrowDice({ row }: { row: Die }) {
-  const [diceBox, setDiceBox] = useState(null);
+export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boolean }) {
+  const [diceBox, setDiceBox] = useState(null as null | Box);
+
+  useEffect(() => {
+    if (addAnotherDie && diceBox) {
+      diceBox.add([`1d${row.sides}`], { newStartPoint: true, themeColor: row.color });
+    }
+  }, [addAnotherDie]);
 
   useEffect(() => {
     const box = new DiceBox("#dice-box", {
@@ -31,17 +38,19 @@ export function ThrowDice({ row }: { row: Die }) {
     });
   }, []);
 
-  const rollDice = (box: any) => {
+  const rollDice = (box: Box) => {
     if (box) {
-      box
-        .roll([`1d${row.sides}`], {
-          themeColor: row.color,
-        })
-        .then((results: { value: any }[]) => {
-          toast({
-            title: `Roll result: ${results[0].value}`,
-          });
+      box.roll([`1d${row.sides}`], {
+        themeColor: row.color,
+      });
+
+      box.onRollComplete = (rollResult: any[]) => {
+        const { result, desc } = calculateRollResult(rollResult);
+        toast({
+          title: `${result}`,
+          description: desc ? desc : undefined,
         });
+      };
     }
   };
 

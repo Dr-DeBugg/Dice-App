@@ -5,7 +5,6 @@ import { DataTableDice } from "./data-table-dice";
 import { Die, getDiceColumns } from "@/components/ui/columns";
 import { toast } from "../shadcn/use-toast";
 import { deleteDie } from "@/lib/api/requests";
-// import { DataTableGroup } from "./data-table-group";
 
 interface DicesResponse {
   resp: {

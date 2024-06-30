@@ -8,6 +8,17 @@ import { Switch } from "../shadcn/switch";
 
 export const RollIndicator = ({ row }: { row: Die }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSwitchChecked, setIsSwitchChecked] = useState(false);
+
+  const handleSwitchChange = (checked: boolean) => {
+    setIsSwitchChecked(checked);
+
+    if (checked) {
+      setTimeout(() => {
+        setIsSwitchChecked(false);
+      }, 500);
+    }
+  };
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
@@ -20,11 +31,11 @@ export const RollIndicator = ({ row }: { row: Die }) => {
       </Button>
       <Dialog open={isModalOpen} onOpenChange={closeModal}>
         <DialogContent className="sm:max-w-[425px] p-2">
-        <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-          <Switch>Add </Switch>
+          <div className="flex justify-center w-full py-2 px-4">
+            <Switch checked={isSwitchChecked} onCheckedChange={handleSwitchChange} />
           </div>
           <div id="dice-box" className="responsive-dice-box"></div>
-          <ThrowDice row={row} />
+          <ThrowDice row={row} addAnotherDie={isSwitchChecked} />
         </DialogContent>
       </Dialog>
     </>
