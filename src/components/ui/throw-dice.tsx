@@ -6,7 +6,8 @@ import { Die } from "./columns";
 import { toast } from "../shadcn/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
-import { Box, calculateRollResult } from "./throw-many-dice";
+import { Box } from "./throw-many-dice";
+import { handleRollComplete } from "@/lib/handleRollComplete";
 
 export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boolean }) {
   const [diceBox, setDiceBox] = useState(null as null | Box);
@@ -44,13 +45,7 @@ export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boo
         themeColor: row.color,
       });
 
-      box.onRollComplete = (rollResult: any[]) => {
-        const { result, desc } = calculateRollResult(rollResult);
-        toast({
-          title: `${result}`,
-          description: desc ? desc : undefined,
-        });
-      };
+      box.onRollComplete = handleRollComplete;
     }
   };
 

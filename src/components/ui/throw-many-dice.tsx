@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
-import { toast } from "../shadcn/use-toast";
+
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
+import { handleRollComplete } from "@/lib/handleRollComplete";
 
 type DiceRows = {
   original: {
@@ -29,35 +30,6 @@ function createDiceArray(rows: DiceRows[]) {
   return transformedArray;
 }
 
-export function calculateRollResult(rollResult: any[]) {
-  const initialAccumulator = { sum: 0, expression: "" };
-
-  const result = rollResult.reduce(
-    (
-      accumulator: { sum: number; expression: string },
-      currentValue: { value: number },
-      index: number
-    ) => {
-      accumulator.sum += currentValue.value;
-
-      index === 0
-        ? (accumulator.expression = `${currentValue.value}`)
-        : (accumulator.expression += ` + ${currentValue.value}`);
-
-      return accumulator;
-    },
-    initialAccumulator
-  );
-
-  const { sum, expression } = result;
-
-  //if expression is a number, only one die has been thrown
-  if (!isNaN(expression)) {
-    return { result: `Roll result = ${sum}`, desc: undefined };
-  }
-  return { result: `Roll result = ${sum}`, desc: expression };
-}
-
 export function ThrowManyDice({ rows }: { rows: DiceRows[] }) {
   const [diceBox, setDiceBox] = useState(null as null | Box);
 
@@ -79,13 +51,7 @@ export function ThrowManyDice({ rows }: { rows: DiceRows[] }) {
     box.init().then(() => {
       setDiceBox(box);
       rollDice(box);
-      box.onRollComplete = (rollResult: any[]) => {
-        const resultString = calculateRollResult(rollResult);
-
-        toast({
-          title: `${resultString}`,
-        });
-      };
+      box.onRollComplete = handleRollComplete;
     });
   }, []);
 
