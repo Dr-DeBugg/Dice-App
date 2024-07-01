@@ -2,17 +2,11 @@
 
 import { useEffect, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
-
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
 import { handleRollComplete } from "@/lib/handleRollComplete";
-
-type DiceRows = {
-  original: {
-    sides: number;
-    color: string;
-  };
-};
+import { Spinner } from "../shadcn/spinner";
+import { Row } from "@tanstack/react-table";
 
 export type Box = {
   roll(dice: string[], options: { themeColor: string }): Promise<any[]>;
@@ -21,7 +15,7 @@ export type Box = {
   onRollComplete: (rollResult: any[]) => void;
 };
 
-function createDiceArray(rows: DiceRows[]) {
+function createDiceArray(rows: Row<any>[]) {
   const transformedArray = rows.map((row) => ({
     sides: row.original.sides.toString(),
     color: row.original.color,
@@ -30,8 +24,9 @@ function createDiceArray(rows: DiceRows[]) {
   return transformedArray;
 }
 
-export function ThrowManyDice({ rows }: { rows: DiceRows[] }) {
+export function ThrowManyDice<TData>({ rows }: { rows: Row<TData>[] }) {
   const [diceBox, setDiceBox] = useState(null as null | Box);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const box: Box = new DiceBox("#dice-box", {
@@ -52,6 +47,7 @@ export function ThrowManyDice({ rows }: { rows: DiceRows[] }) {
       setDiceBox(box);
       rollDice(box);
       box.onRollComplete = handleRollComplete;
+      setLoading(false);
     });
   }, []);
 
@@ -76,7 +72,22 @@ export function ThrowManyDice({ rows }: { rows: DiceRows[] }) {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+    <div style={{ display: "flex", justifyContent: "center", width: "100%", position: "relative" }}>
+      {/* todo FIX THIS AND ADD SKELETON */}
+      {loading ? (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, calc(-50% - 230px))",
+          }}
+        >
+          <Spinner size="large" />{" "}
+        </div>
+      ) : (
+        ""
+      )}
       <Button variant="ghost" onClick={handleReRoll}>
         <ReloadIcon className="h-6 w-6" />
       </Button>

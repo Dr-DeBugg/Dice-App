@@ -14,8 +14,8 @@ export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boo
 
   useEffect(() => {
     if (addAnotherDie && diceBox) {
-      setDiceInScene(diceInScene + 1);
       diceBox.add([`1d${row.sides}`], { newStartPoint: true, themeColor: row.color });
+      setDiceInScene(diceInScene + 1);
     }
   }, [addAnotherDie]);
 

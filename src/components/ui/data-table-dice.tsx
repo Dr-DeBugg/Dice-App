@@ -45,7 +45,7 @@ export function DataTableDice<TData, TValue>({ columns, data }: DataTableProps<T
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar selectedRows={table.getFilteredSelectedRowModel().rows as Row<Die>[]} />
+      <DataTableToolbar table={table} selectedRows={table.getFilteredSelectedRowModel().rows} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

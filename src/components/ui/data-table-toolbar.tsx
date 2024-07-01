@@ -4,16 +4,17 @@ import { Button } from "../shadcn/button";
 import { HandIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { NewDieDialog } from "./new-die-dialog";
 import { useState } from "react";
-import { Row } from "@tanstack/react-table";
+import { Row, Table } from "@tanstack/react-table";
 import { Die } from "./columns";
 import { Dialog, DialogContent } from "../shadcn/dialog";
 import { ThrowManyDice } from "./throw-many-dice";
 
-interface DataTableToolbarProps {
-  selectedRows: Row<Die>[];
+interface DataTableToolbarProps<TData> {
+  selectedRows: Row<TData>[];
+  table: Table<TData>;
 }
 
-export function DataTableToolbar({ selectedRows }: DataTableToolbarProps) {
+export function DataTableToolbar<TData>({ table, selectedRows }: DataTableToolbarProps<TData>) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isThrowManyOpen, setIsThrowManyOpen] = useState(false);
 
@@ -23,6 +24,7 @@ export function DataTableToolbar({ selectedRows }: DataTableToolbarProps) {
 
   const closeThrowManyDialog = () => {
     setIsThrowManyOpen(false);
+    table.toggleAllRowsSelected(false);
   };
 
   const openAddModal = () => {
@@ -51,11 +53,11 @@ export function DataTableToolbar({ selectedRows }: DataTableToolbarProps) {
           <HandIcon className="ml-2 h-4 w-4" />
         </Button>
         <Dialog open={isThrowManyOpen} onOpenChange={closeThrowManyDialog}>
-        <DialogContent className="sm:max-w-[425px] p-2" >
-          <div id="dice-box" className="responsive-dice-box"></div>
-          <ThrowManyDice rows={selectedRows}/>
-        </DialogContent>
-      </Dialog>
+          <DialogContent className="sm:max-w-[425px] p-2">
+            <div id="dice-box" className="responsive-dice-box"></div>
+            <ThrowManyDice rows={selectedRows} />
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
