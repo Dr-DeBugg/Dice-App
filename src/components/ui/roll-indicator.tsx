@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Button } from "../shadcn/button";
-import { HandIcon, PlusCircledIcon, PlusIcon } from "@radix-ui/react-icons";
+import { HandIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Dialog, DialogContent } from "../shadcn/dialog";
 import { ThrowDice } from "./throw-dice";
 import { Die } from "./columns";

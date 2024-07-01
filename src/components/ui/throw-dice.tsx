@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
 import { Die } from "./columns";
-import { toast } from "../shadcn/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
 import { Box } from "./throw-many-dice";
@@ -11,9 +10,11 @@ import { handleRollComplete } from "@/lib/handleRollComplete";
 
 export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boolean }) {
   const [diceBox, setDiceBox] = useState(null as null | Box);
+  const [diceInScene, setDiceInScene] = useState(1);
 
   useEffect(() => {
     if (addAnotherDie && diceBox) {
+      setDiceInScene(diceInScene + 1);
       diceBox.add([`1d${row.sides}`], { newStartPoint: true, themeColor: row.color });
     }
   }, [addAnotherDie]);
@@ -35,14 +36,16 @@ export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boo
 
     box.init().then(() => {
       setDiceBox(box);
-      rollDice(box);
+      rollDice(box, 1);
     });
   }, []);
 
-  const rollDice = (box: Box) => {
+  const rollDice = (box: Box, amount: number) => {
     if (box) {
-      box.roll([`1d${row.sides}`], {
-        themeColor: row.color,
+      Array.from({ length: amount }).forEach(() => {
+        box.roll([`1d${row.sides}`], {
+          themeColor: row.color,
+        });
       });
 
       box.onRollComplete = handleRollComplete;
@@ -51,7 +54,7 @@ export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boo
 
   const handleReRoll = () => {
     if (diceBox) {
-      rollDice(diceBox);
+      rollDice(diceBox, diceInScene);
     }
   };
 
