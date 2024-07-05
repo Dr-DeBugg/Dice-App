@@ -16,6 +16,7 @@ interface DataTableToolbarProps<TData> {
 export function DataTableToolbar<TData>({ table, selectedRows }: DataTableToolbarProps<TData>) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isThrowManyOpen, setIsThrowManyOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const openThrowManyDialog = () => {
     setIsThrowManyOpen(true);
@@ -53,8 +54,8 @@ export function DataTableToolbar<TData>({ table, selectedRows }: DataTableToolba
         </Button>
         <Dialog open={isThrowManyOpen} onOpenChange={closeThrowManyDialog}>
           <DialogContent className="sm:max-w-[425px] p-2 top-[55%]">
-            <div id="dice-box" className="responsive-dice-box"></div>
-            <ThrowDice rows={selectedRows} />
+            <div id="dice-box" className="responsive-dice-box" />
+            <ThrowDice rows={selectedRows} setLoading={setLoading} loading={loading} />
           </DialogContent>
         </Dialog>
       </div>
