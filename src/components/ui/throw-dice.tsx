@@ -2,19 +2,21 @@
 
 import { useEffect, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
-import { Die } from "./columns";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
-import { Box } from "./throw-many-dice";
 import { handleRollComplete } from "@/lib/handleRollComplete";
+import { Spinner } from "../shadcn/spinner";
+import { Box } from "@/lib/boxType";
+import { rollGroup, rollSingle } from "@/lib/rollHelper";
 
-export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boolean }) {
+export function ThrowDice<TData>({ rows, addAnotherDie }: { rows: any; addAnotherDie?: boolean }) {
   const [diceBox, setDiceBox] = useState(null as null | Box);
+  const [loading, setLoading] = useState(true);
   const [diceInScene, setDiceInScene] = useState(1);
 
   useEffect(() => {
     if (addAnotherDie && diceBox) {
-      diceBox.add([`1d${row.sides}`], { newStartPoint: true, themeColor: row.color });
+      diceBox.add([`1d${rows[0].sides}`], { newStartPoint: true, themeColor: rows[0].color });
       setDiceInScene(diceInScene + 1);
     }
   }, [addAnotherDie]);
@@ -36,31 +38,44 @@ export function ThrowDice({ row, addAnotherDie }: { row: Die; addAnotherDie: boo
 
     box.init().then(() => {
       setDiceBox(box);
-      rollDice(box, 1);
+      setLoading(false);
+      rollDice(box);
+      box.onRollComplete = handleRollComplete;
     });
   }, []);
 
-  const rollDice = (box: Box, amount: number) => {
+  const rollDice = (box: Box) => {
     if (box) {
-      Array.from({ length: amount }).forEach(() => {
-        box.roll([`1d${row.sides}`], {
-          themeColor: row.color,
-        });
-      });
-
-      box.onRollComplete = handleRollComplete;
+      if (rows.length === 1) {
+        rollSingle(diceInScene, box, rows);
+      } else {
+        rollGroup(rows, box);
+      }
     }
   };
 
-  const handleReRoll = () => {
+  const handleReroll = () => {
     if (diceBox) {
-      rollDice(diceBox, diceInScene);
+      rollDice(diceBox);
     }
   };
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-      <Button variant="ghost" onClick={handleReRoll}>
+      {/* todo FIX THIS AND ADD SKELETON */}
+      {loading ? (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, calc(-50%))",
+          }}
+        >
+          <Spinner size="large" />
+        </div>
+      ) : null}
+      <Button variant="ghost" onClick={handleReroll}>
         <ReloadIcon className="h-6 w-6" />
       </Button>
     </div>

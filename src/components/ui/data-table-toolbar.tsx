@@ -5,9 +5,8 @@ import { HandIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { NewDieDialog } from "./new-die-dialog";
 import { useState } from "react";
 import { Row, Table } from "@tanstack/react-table";
-import { Die } from "./columns";
 import { Dialog, DialogContent } from "../shadcn/dialog";
-import { ThrowManyDice } from "./throw-many-dice";
+import { ThrowDice } from "./throw-dice";
 
 interface DataTableToolbarProps<TData> {
   selectedRows: Row<TData>[];
@@ -53,9 +52,9 @@ export function DataTableToolbar<TData>({ table, selectedRows }: DataTableToolba
           <HandIcon className="ml-2 h-4 w-4" />
         </Button>
         <Dialog open={isThrowManyOpen} onOpenChange={closeThrowManyDialog}>
-          <DialogContent className="sm:max-w-[425px] p-2">
+          <DialogContent className="sm:max-w-[425px] p-2 top-[55%]">
             <div id="dice-box" className="responsive-dice-box"></div>
-            <ThrowManyDice rows={selectedRows} />
+            <ThrowDice rows={selectedRows} />
           </DialogContent>
         </Dialog>
       </div>
