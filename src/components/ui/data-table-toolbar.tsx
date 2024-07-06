@@ -6,8 +6,8 @@ import { NewDieDialog } from "./new-die-dialog";
 import { useState } from "react";
 import { Table } from "@tanstack/react-table";
 import { Dialog, DialogContent } from "../shadcn/dialog";
-import { ThrowDice } from "./throw-dice";
 import { Die } from "./columns";
+import { DiceContent } from "./dice-content";
 
 interface DataTableToolbarProps<TData> {
   selectedRows: Die[];
@@ -55,8 +55,7 @@ export function DataTableToolbar<TData>({ table, selectedRows }: DataTableToolba
         </Button>
         <Dialog open={isThrowManyOpen} onOpenChange={closeThrowManyDialog}>
           <DialogContent className="sm:max-w-[425px] p-2 top-[55%]">
-            <div id="dice-box" className="responsive-dice-box" />
-            <ThrowDice rows={selectedRows} setLoading={setLoading} loading={loading} />
+            <DiceContent rows={selectedRows} setLoading={setLoading} loading={loading} />
           </DialogContent>
         </Dialog>
       </div>

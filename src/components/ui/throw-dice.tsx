@@ -10,17 +10,17 @@ import { Box } from "@/lib/boxType";
 import { rollGroup, rollSingle } from "@/lib/rollHelper";
 import { Skeleton } from "../shadcn/skeleton";
 import { Die } from "./columns";
-import { useSwipeable } from "react-swipeable";
 
 type ThrowDiceProps = {
   rows: Die[];
   addAnotherDie?: boolean;
   setLoading: (value: boolean) => void;
   loading: boolean;
+  reroll: boolean;
 };
 
 export function ThrowDice(props: ThrowDiceProps) {
-  const { rows, addAnotherDie, setLoading, loading } = props;
+  const { rows, addAnotherDie, setLoading, loading, reroll } = props;
   const [diceBox, setDiceBox] = useState(null as null | Box);
   const [diceInScene, setDiceInScene] = useState(1);
 
@@ -31,24 +31,15 @@ export function ThrowDice(props: ThrowDiceProps) {
     }
   }
 
-  useSwipeable({
-    onSwiped: ({ dir, event }) => {
-      event.stopPropagation();
-      console.log("hmmm ", dir, event);
-
-      if (dir === "Right") {
-        addDieToScene();
-      }
-      if (dir === "Left") {
-        handleReroll();
-      }
-    },
-    onSwiping: ({ event }) => event.stopPropagation(),
-  });
-
   useEffect(() => {
     addDieToScene();
   }, [addAnotherDie]);
+
+  useEffect(() => {
+    if (reroll) {
+      handleReroll();
+    }
+  }, [reroll]);
 
   useEffect(() => {
     const box = new DiceBox("#dice-box", {

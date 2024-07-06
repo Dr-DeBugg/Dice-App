@@ -103,7 +103,18 @@ p {
   z-index: 1;
 }
 
+#overlay-div {
+  position: absolute;
+  top: 0;
+  width: 408px;
+  height: 425px;
+  left: 0;
+  z-index: 0;
+  pointer-events: auto;
+}
+
 .responsive-dice-box {
+  position: relative;
   width: 408px;
   height: 425px;
 }

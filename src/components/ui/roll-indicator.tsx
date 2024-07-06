@@ -3,8 +3,8 @@ import { Button } from "../shadcn/button";
 import { HandIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Dialog, DialogContent } from "../shadcn/dialog";
 import { Die } from "./columns";
-import { ThrowDice } from "./throw-dice";
 import { Skeleton } from "../shadcn/skeleton";
+import { DiceContent } from "./dice-content";
 
 export const RollIndicator = ({ row }: { row: Die }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,7 +12,7 @@ export const RollIndicator = ({ row }: { row: Die }) => {
   const [loading, setLoading] = useState(true);
   const rowArr = Array.from([row]);
 
-  const handleSwitchChange = () => {
+  const triggerAddDie = () => {
     setAddAnother(true);
 
     setTimeout(() => {
@@ -35,17 +35,17 @@ export const RollIndicator = ({ row }: { row: Die }) => {
             {loading ? (
               <Skeleton className="h-8 w-[50px]" />
             ) : (
-              <Button variant="ghost" onClick={handleSwitchChange}>
+              <Button variant="ghost" onClick={triggerAddDie}>
                 <PlusCircledIcon className="h-7 w-7" />
               </Button>
             )}
           </div>
-          <div id="dice-box" className="responsive-dice-box"></div>
-          <ThrowDice
+          <DiceContent
             rows={rowArr}
             addAnotherDie={addAnother}
             setLoading={setLoading}
             loading={loading}
+            triggerAddDie={triggerAddDie}
           />
         </DialogContent>
       </Dialog>
