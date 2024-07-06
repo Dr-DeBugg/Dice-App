@@ -1,6 +1,16 @@
+type DieResult = {
+  value: number;
+  notation: string;
+};
+
+type RollOptions = {
+  themeColor: string;
+  newStartPoint?: boolean;
+};
+
 export type Box = {
-  roll(dice: string[], options: { themeColor: string }): Promise<any[]>;
-  add: ([], arg1: Object) => Promise<any[]>;
-  init: () => Promise<Box>;
-  onRollComplete: (rollResult: any[]) => void;
+  roll(notation: string | string[], options?: RollOptions): Promise<DieResult[]>;
+  add(notation: string | string[], options?: RollOptions): Promise<DieResult[]>;
+  init(): Promise<Box>;
+  onRollComplete: (rollResult: DieResult[]) => void;
 };

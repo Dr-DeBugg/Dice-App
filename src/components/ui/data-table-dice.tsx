@@ -17,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
-import React from "react";
+import React, { useMemo } from "react";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { DataTablePagination } from "./data-table-pagination";
 import { Die } from "./columns";
@@ -43,9 +43,11 @@ export function DataTableDice<TData, TValue>({ columns, data }: DataTableProps<T
     },
   });
 
+  const originalItems = table.getFilteredSelectedRowModel().rows.map((row) => row.original as Die);
+
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} selectedRows={table.getFilteredSelectedRowModel().rows} />
+      <DataTableToolbar table={table} selectedRows={originalItems} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
@@ -9,15 +9,16 @@ import { Spinner } from "../shadcn/spinner";
 import { Box } from "@/lib/boxType";
 import { rollGroup, rollSingle } from "@/lib/rollHelper";
 import { Skeleton } from "../shadcn/skeleton";
+import { Die } from "./columns";
 
 type ThrowDiceProps = {
-  rows: any;
+  rows: Die[];
   addAnotherDie?: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading: (value: boolean) => void;
   loading: boolean;
 };
 
-export function ThrowDice<TData>(props: ThrowDiceProps) {
+export function ThrowDice(props: ThrowDiceProps) {
   const { rows, addAnotherDie, setLoading, loading } = props;
   const [diceBox, setDiceBox] = useState(null as null | Box);
   const [diceInScene, setDiceInScene] = useState(1);

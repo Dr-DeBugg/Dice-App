@@ -4,12 +4,13 @@ import { Button } from "../shadcn/button";
 import { HandIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { NewDieDialog } from "./new-die-dialog";
 import { useState } from "react";
-import { Row, Table } from "@tanstack/react-table";
+import { Table } from "@tanstack/react-table";
 import { Dialog, DialogContent } from "../shadcn/dialog";
 import { ThrowDice } from "./throw-dice";
+import { Die } from "./columns";
 
 interface DataTableToolbarProps<TData> {
-  selectedRows: Row<TData>[];
+  selectedRows: Die[];
   table: Table<TData>;
 }
 
