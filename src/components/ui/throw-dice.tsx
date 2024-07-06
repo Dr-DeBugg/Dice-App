@@ -10,6 +10,7 @@ import { Box } from "@/lib/boxType";
 import { rollGroup, rollSingle } from "@/lib/rollHelper";
 import { Skeleton } from "../shadcn/skeleton";
 import { Die } from "./columns";
+import { useSwipeable } from "react-swipeable";
 
 type ThrowDiceProps = {
   rows: Die[];
@@ -23,11 +24,30 @@ export function ThrowDice(props: ThrowDiceProps) {
   const [diceBox, setDiceBox] = useState(null as null | Box);
   const [diceInScene, setDiceInScene] = useState(1);
 
-  useEffect(() => {
+  function addDieToScene() {
     if (addAnotherDie && diceBox) {
       diceBox.add([`1d${rows[0].sides}`], { newStartPoint: true, themeColor: rows[0].color });
       setDiceInScene(diceInScene + 1);
     }
+  }
+
+  useSwipeable({
+    onSwiped: ({ dir, event }) => {
+      event.stopPropagation();
+      console.log("hmmm ", dir, event);
+
+      if (dir === "Right") {
+        addDieToScene();
+      }
+      if (dir === "Left") {
+        handleReroll();
+      }
+    },
+    onSwiping: ({ event }) => event.stopPropagation(),
+  });
+
+  useEffect(() => {
+    addDieToScene();
   }, [addAnotherDie]);
 
   useEffect(() => {
