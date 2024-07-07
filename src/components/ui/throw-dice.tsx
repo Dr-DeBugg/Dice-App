@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "../shadcn/button";
@@ -62,6 +62,13 @@ export function ThrowDice(props: ThrowDiceProps) {
       rollDice(box);
       box.onRollComplete = handleRollComplete;
     });
+
+    return () => {
+      if (box) {
+        //if dialog is closed no toast result is shown
+        box.onRollComplete = () => {};
+      }
+    };
   }, []);
 
   const rollDice = (box: Box) => {
