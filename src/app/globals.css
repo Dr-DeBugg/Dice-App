@@ -92,7 +92,7 @@ p {
   @apply flex items-center space-x-2 transition hover:text-secondary xs:text-base text-sm lg:text-2xl;
 }
 .rainbow-heading-text {
-  @apply text-2xl font-bold tracking-tight xs:text-3xl;
+  @apply text-3xl font-bold text-center tracking-tight xs:text-4xl;
 }
 .icon-size {
   @apply h-5 w-5 xs:h-6 xs:w-6;
