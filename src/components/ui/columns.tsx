@@ -3,8 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { DataTableRowActions } from "./data-table-row-actions";
-import {  ColorIndicator } from "./color-indicator";
-import { RollIndicator } from "./roll-indicator";
+import { DiceRowAction } from "./dice-row-action";
 
 export type Die = {
   id: string;
@@ -38,13 +37,13 @@ export const getDiceColumns = ({ onDelete }: DiceColumnsProps): ColumnDef<Die>[]
   },
   {
     accessorKey: "die",
-    header: "Die",
-    cell: ({ row }) => <ColorIndicator color={row.original.color} sides={row.original.sides}/>,
-  },
-  {
-    accessorKey: "throw",
-    header: "Throw",
-    cell: ({ row }) => <RollIndicator row={row.original}/>,
+    header: "Sides & Color",
+    cell: ({ row, table }) => (
+      <DiceRowAction
+        row={row.original}
+        selectedRows={table?.getFilteredSelectedRowModel()?.rows?.length}
+      />
+    ),
   },
   {
     id: "actions",

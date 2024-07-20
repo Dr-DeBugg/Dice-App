@@ -48,7 +48,9 @@ export function DataTableToolbar<TData>({ table, selectedRows }: DataTableToolba
           variant="outline"
           disabled={selectedRows.length < 2}
           onClick={openThrowManyDialog}
-          className="h-8 px-2 lg:px-3 text-base"
+          className={`h-8 px-2 lg:px-3 text-base ${
+            selectedRows.length > 1 ? "purple-shimmer" : ""
+          }`}
         >
           Throw group
           <HandIcon className="ml-2 h-4 w-4" />
