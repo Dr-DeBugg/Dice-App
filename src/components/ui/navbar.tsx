@@ -12,7 +12,7 @@ export default function Navbar() {
     <nav className="flex flex-col xs:flex-row justify-between items-center py-8">
       <Link className="h1-style flex items-center" href="/">
         <span className="flex-shrink-0">🎲 Dice App</span>
-        <div className="flex items-center ml-2">
+        <div className="flex items-center ml-1">
           {pathname === "/" ? null : <ResetIcon className="h-7 w-7 ml-2" />}
         </div>
       </Link>
