@@ -63,7 +63,7 @@ const technologies = [
     icon: <HeartIcon className="icon-size text-red-600" />,
     text: (
       <a href="https://github.com/3d-dice/dice-box" target="_blank" rel="noopener noreferrer">
-        Dice-box JavaScript library for rolling dices
+        Dice-box JavaScript library for dice rolling
       </a>
     ),
   },

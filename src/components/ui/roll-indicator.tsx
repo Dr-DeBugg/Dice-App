@@ -6,7 +6,7 @@ import { Die } from "./columns";
 import { Skeleton } from "../shadcn/skeleton";
 import { DiceContent } from "./dice-content";
 
-export const RollIndicator = ({ row }: { row: Die }) => {
+export const RollIndicator = ({ row, disableThrow }: { row: Die; disableThrow: boolean }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -26,8 +26,13 @@ export const RollIndicator = ({ row }: { row: Die }) => {
 
   return (
     <>
-      <Button variant="outline" onClick={() => setIsModalOpen(!isModalOpen)}>
-        <HandIcon className="h-4 w-4" />
+      <Button
+        disabled={disableThrow}
+        variant="outline"
+        onClick={() => setIsModalOpen(!isModalOpen)}
+      >
+        Throw
+        <HandIcon className="ml-2 h-4 w-4" />
       </Button>
       <Dialog open={isModalOpen} onOpenChange={closeModal}>
         <DialogContent className="sm:max-w-[425px] p-2 top-[55%]">
