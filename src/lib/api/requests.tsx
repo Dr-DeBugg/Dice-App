@@ -2,7 +2,7 @@
 
 import { Die } from "@/components/ui/columns";
 import { sql } from "@vercel/postgres";
-import { revalidatePath, unstable_noStore } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { schema } from "../schema";
 
@@ -11,8 +11,6 @@ function createDiceResponse(dices: Die[], error?: string) {
 }
 
 export async function getAllDices() {
-  //TODO: test if this does anything in build version
-  unstable_noStore();
   try {
     const result = await sql`SELECT * FROM dices ORDER BY created_at DESC;`;
 
