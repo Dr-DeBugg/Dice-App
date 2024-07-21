@@ -6,6 +6,10 @@ import { Toaster } from "@/components/shadcn/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const metadata = {
+  title: "Dice App",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

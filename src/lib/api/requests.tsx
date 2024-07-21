@@ -42,7 +42,7 @@ export async function onSubmitAction(data: FormData): Promise<FormState> {
 
   try {
     await sql`INSERT INTO Dices (Id, Color, Sides) VALUES ( gen_random_uuid (), ${die.color}, ${die.sides});`;
-    revalidatePath("/");
+    revalidatePath("/", "page");
     return { message: "Added new 🎲" };
   } catch (e) {
     return { message: "Error: Failed to create 🎲" };
@@ -72,7 +72,7 @@ export async function deleteDie(id: string) {
     const result = await sql`DELETE FROM dices WHERE id = ${id}`;
 
     if (result.rowCount === 1) {
-      revalidatePath("");
+      revalidatePath("/", "page");
       return { message: "Successfully removed a die!" };
     }
 

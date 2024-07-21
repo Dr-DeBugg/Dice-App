@@ -5,7 +5,6 @@ import { DataTableDice } from "./data-table-dice";
 import { Die, getDiceColumns } from "@/components/ui/columns";
 import { toast } from "../shadcn/use-toast";
 import { deleteDie } from "@/lib/api/requests";
-import revalidateCache from "@/lib/actions";
 
 interface DicesResponse {
   resp: {
@@ -17,7 +16,6 @@ interface DicesResponse {
 export default function Dashboard({ resp }: DicesResponse) {
   const onDelete = async (id: string) => {
     const resp = await deleteDie(id);
-    revalidateCache();
     toast({
       variant: resp?.error ? "destructive" : "success",
       description: resp?.error ? resp.error : resp?.message,
