@@ -65,7 +65,7 @@ export function ThrowDice(props: ThrowDiceProps) {
 
     return () => {
       if (box) {
-        //if dialog is closed no toast result is shown
+        //if dialog is closed before roll is complete - no result is shown
         box.onRollComplete = () => {};
       }
     };

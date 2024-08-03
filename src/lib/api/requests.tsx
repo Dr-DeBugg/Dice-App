@@ -10,6 +10,13 @@ function createDiceResponse(dices: Die[], error?: string) {
   return { error, dices };
 }
 
+export interface HistoryData {
+  timestamp: string,
+  dice_thrown: string,
+  individual_results: string,
+  result_sum: number
+}
+
 export async function getAllDices() {
   try {
     const result = await sql`SELECT * FROM dices ORDER BY created_at DESC;`;
@@ -21,6 +28,17 @@ export async function getAllDices() {
   } catch (error) {
     console.error("Failed to fetch dices:", error);
     return createDiceResponse([], "Internal Server Error");
+  }
+}
+
+export async function addToHistory(history: HistoryData) {
+  console.log(history);
+  try {
+    await sql`INSERT INTO history (timestamp, dice_thrown, individual_results, result_sum)
+    VALUES (${history.timestamp}, ${history.dice_thrown}, ${history.individual_results}, ${history.result_sum})`;
+
+  } catch (error) {
+    console.error("Failed to add result to history:", error);
   }
 }
 
@@ -43,26 +61,10 @@ export async function onSubmitAction(data: FormData): Promise<FormState> {
   try {
     await sql`INSERT INTO Dices (Id, Color, Sides) VALUES ( gen_random_uuid (), ${die.color}, ${die.sides});`;
     revalidatePath("/", "page");
-    return { message: "Added new 🎲" };
+    return { message: "Added new die" };
   } catch (e) {
-    return { message: "Error: Failed to create 🎲" };
+    return { message: "Error: Failed to create die" };
   }
-}
-
-export async function POST(req: Request) {
-  const data = await req.json();
-
-  if (!data.name || !data.sides) {
-    return nextResponse({ message: "Missing data: name and sides required." }, 404);
-  }
-
-  try {
-    await sql`INSERT INTO Dices (Id, Name, Sides) VALUES ( gen_random_uuid (), ${data.name}, ${data.sides});`;
-  } catch (error) {
-    return nextResponse({ error }, 500);
-  }
-
-  return nextResponse({ message: `Succesfully added die named ${data.name}` }, 200);
 }
 
 export async function deleteDie(id: string) {
@@ -86,19 +88,3 @@ export async function deleteDie(id: string) {
 function nextResponse(response: object, statusCode: number) {
   return NextResponse.json(response, { status: statusCode });
 }
-
-// export async function GET(request: Request) {
-//   const { searchParams } = new URL(request.url);
-//   const name = searchParams.get('name');
-//   const sides = searchParams.get('sides');
-
-//   try {
-//     if (!name || !sides) throw new Error('Name and Sides required');
-//     await sql`INSERT INTO Dices (Id, Name, Sides) VALUES ( gen_random_uuid (), ${name}, ${sides});`;
-//   } catch (error) {
-//     return NextResponse.json({ error }, { status: 500 });
-//   }
-
-//   const dices = await sql`SELECT * FROM Dices;`;
-//   return NextResponse.json({ dices }, { status: 200 });
-// }
