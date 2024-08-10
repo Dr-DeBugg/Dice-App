@@ -12,22 +12,6 @@ export async function GET() {
   return NextResponse.json({ dices }, { status: 200 });
 }
 
-// UPDATE your_table_name SET Color = 'default_value' WHERE Color IS NULL;
-// ALTER TABLE your_table_name DROP COLUMN name;
-
-// export async function GET() {
-//   try {
-//     const result = await sql`SELECT * FROM dices;`;
-
-//     if (result.rows.length === 0) return nextResponse({ message: "No dices found." }, 404);
-
-//     return nextResponse({ dices: result.rows }, 200);
-//   } catch (error) {
-//     console.error("Failed to fetch dices:", error);
-//     return nextResponse({ error: "Internal Server Error" }, 500);
-//   }
-// }
-
 export async function POST(req: Request) {
   const data = await req.json();
 
