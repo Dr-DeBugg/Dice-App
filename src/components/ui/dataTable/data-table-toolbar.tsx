@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "../shadcn/button";
+import { Button } from "../../shadcn/button";
 import { HandIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import { NewDieDialog } from "./new-die-dialog";
+import { NewDieDialog } from "../new-die-dialog";
 import { useState } from "react";
 import { Table } from "@tanstack/react-table";
-import { Dialog, DialogContent } from "../shadcn/dialog";
+import { Dialog, DialogContent } from "../../shadcn/dialog";
 import { Die } from "./columns";
-import { DiceContent } from "./dice-content";
+import { DiceContent } from "../dice-content";
 
 interface DataTableToolbarProps<TData> {
   selectedRows: Die[];

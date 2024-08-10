@@ -9,7 +9,7 @@ import { Spinner } from "../shadcn/spinner";
 import { Box } from "@/lib/boxType";
 import { rollGroup, rollSingle } from "@/lib/rollHelper";
 import { Skeleton } from "../shadcn/skeleton";
-import { Die } from "./columns";
+import { Die } from "./dataTable/columns";
 
 type ThrowDiceProps = {
   rows: Die[];

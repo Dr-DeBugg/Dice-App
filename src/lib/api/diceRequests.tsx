@@ -1,6 +1,6 @@
 "use server";
 
-import { Die } from "@/components/ui/columns";
+import { Die } from "@/components/ui/dataTable/columns";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { schema } from "../schema";

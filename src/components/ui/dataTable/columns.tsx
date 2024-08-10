@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { DataTableRowActions } from "./data-table-row-actions";
-import { DiceRowAction } from "./dice-row-action";
+import { DiceRowAction } from "../dice-row-action";
 
 export type Die = {
   id: string;

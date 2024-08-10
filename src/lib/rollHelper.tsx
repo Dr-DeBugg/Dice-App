@@ -1,5 +1,5 @@
 import { Box } from "./boxType";
-import { Die } from "@/components/ui/columns";
+import { Die } from "@/components/ui/dataTable/columns";
 
 export function createDiceArray(rows: Die[]) {
   const transformedArray = rows.map((row) => ({

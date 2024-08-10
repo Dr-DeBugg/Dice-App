@@ -6,7 +6,7 @@ import {
 } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 
-import { Button } from "../shadcn/button";
+import { Button } from "../../shadcn/button";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;

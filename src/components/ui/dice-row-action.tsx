@@ -1,7 +1,7 @@
 import React from "react";
 import { StopIcon } from "@heroicons/react/24/solid";
 import { RollIndicator } from "./roll-indicator";
-import { Die } from "./columns";
+import { Die } from "./dataTable/columns";
 
 export const DiceRowAction = ({ row, selectedRows }: { row: Die; selectedRows: number }) => {
   const disableThrow = selectedRows > 1;

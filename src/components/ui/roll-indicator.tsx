@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Button } from "../shadcn/button";
 import { HandIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Dialog, DialogContent } from "../shadcn/dialog";
-import { Die } from "./columns";
+import { Die } from "./dataTable/columns";
 import { Skeleton } from "../shadcn/skeleton";
 import { DiceContent } from "./dice-content";
 

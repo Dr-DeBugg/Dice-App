@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Die } from "./columns";
+import { Die } from "./dataTable/columns";
 import { ThrowDice } from "./throw-dice";
 import { useSwipeable } from "react-swipeable";
 
