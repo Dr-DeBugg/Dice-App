@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import { GradientPicker } from "./gradient-picker";
-import { onSubmitAction } from "@/lib/api/requests";
+import { onSubmitAction } from "@/lib/api/diceRequests";
 import { schema } from "@/lib/schema";
 import { toast } from "../shadcn/use-toast";
 

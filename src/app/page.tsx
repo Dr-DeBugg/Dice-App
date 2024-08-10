@@ -1,4 +1,4 @@
-import { getAllDices } from "@/lib/api/requests";
+import { getAllDices } from "@/lib/api/diceRequests";
 import Dashboard from "@/components/ui/dashboard";
 import { unstable_cache } from "next/cache";
 

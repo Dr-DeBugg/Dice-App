@@ -1,5 +1,6 @@
 import { toast } from "@/components/shadcn/use-toast";
-import { addToHistory, HistoryData } from "./api/requests";
+import { HistoryData } from "./api/diceRequests";
+import { addToHistory } from "./api/historyRequests";
 
 interface CalculatedResult {
   result: number;
@@ -83,5 +84,6 @@ export function handleRollComplete(rollResult: any[]) {
     result_sum: result,
     individual_results: desc ? desc : result.toString(),
   };
+
   addToHistory(history, naturalCount);
 }

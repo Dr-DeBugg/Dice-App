@@ -10,7 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
-import { CountData, HistoryData } from "@/lib/api/requests";
+import { HistoryData } from "@/lib/api/diceRequests";
+import { CountData } from "@/lib/api/historyRequests";
 
 interface HistoryResponse {
   resp: {

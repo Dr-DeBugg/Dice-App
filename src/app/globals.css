@@ -77,7 +77,7 @@
 
 main,
 nav {
-  @apply max-w-8xl mx-auto px-4 lg:px-8;
+  @apply max-w-8xl mx-auto px-3 lg:px-6;
 }
 p {
   @apply mt-2;
