@@ -17,6 +17,9 @@ export default function Navbar() {
         </div>
       </Link>
       <div className="flex flex-row justify-between items-center w-full xs:w-auto">
+        <Link className="h2-style" href="/history">
+          History
+        </Link>
         <Link className="h2-style" href="/about">
           About
         </Link>

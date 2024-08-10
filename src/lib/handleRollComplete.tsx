@@ -5,18 +5,40 @@ interface CalculatedResult {
   result: number;
   desc: string | undefined;
   diceInThrow: string;
+  naturalCount: NaturalCountType;
 }
 
-function calculateRollResult(rollResult: any[]):  CalculatedResult  {
-  const initialAccumulator = { sum: 0, individualResults: "", diceCounts: {} as { [key: number]: number } };
+export interface NaturalCountType {
+  twenty: number;
+  hundred: number;
+}
+
+function calculateRollResult(rollResult: any[]): CalculatedResult {
+  const initialAccumulator = {
+    sum: 0,
+    individualResults: "",
+    diceCounts: {} as { [key: number]: number },
+    naturalCount: { twenty: 0, hundred: 0 },
+  };
 
   const result = rollResult.reduce(
     (
-      accumulator: { sum: number; individualResults: string; diceCounts: { [key: number]: number } },
-      currentValue: { value: number, sides: number },
+      accumulator: {
+        sum: number;
+        individualResults: string;
+        diceCounts: { [key: number]: number };
+        naturalCount: NaturalCountType;
+      },
+      currentValue: { value: number; sides: number },
       index: number
     ) => {
       accumulator.sum += currentValue.value;
+
+      if (currentValue.value === 20 && currentValue.sides === 20) {
+        accumulator.naturalCount.twenty++;
+      } else if (currentValue.value === 100 && currentValue.sides === 100) {
+        accumulator.naturalCount.hundred++;
+      }
 
       index === 0
         ? (accumulator.individualResults = `${currentValue.value}`)
@@ -33,7 +55,7 @@ function calculateRollResult(rollResult: any[]):  CalculatedResult  {
     initialAccumulator
   );
 
-  const { sum, individualResults, diceCounts } = result;
+  const { sum, individualResults, diceCounts, naturalCount } = result;
 
   const diceInThrow = Object.entries(diceCounts)
     .map(([sides, count]) => `${count}x D${sides}`)
@@ -41,14 +63,14 @@ function calculateRollResult(rollResult: any[]):  CalculatedResult  {
 
   // If individualResults is a number, only one die has been thrown
   if (!isNaN(Number(individualResults))) {
-    return { result: sum, desc: undefined, diceInThrow };
+    return { result: sum, desc: undefined, diceInThrow, naturalCount };
   }
 
-  return { result: sum, desc: individualResults, diceInThrow };
+  return { result: sum, desc: individualResults, diceInThrow, naturalCount };
 }
 
 export function handleRollComplete(rollResult: any[]) {
-  const { result, desc, diceInThrow } = calculateRollResult(rollResult);
+  const { result, desc, diceInThrow, naturalCount } = calculateRollResult(rollResult);
 
   toast({
     title: `Roll result = ${result}`,
@@ -58,8 +80,8 @@ export function handleRollComplete(rollResult: any[]) {
   const history: HistoryData = {
     timestamp: new Date().toISOString(),
     dice_thrown: diceInThrow,
-    result_sum: result, 
+    result_sum: result,
     individual_results: desc ? desc : result.toString(),
-  }
-  addToHistory(history);
+  };
+  addToHistory(history, naturalCount);
 }

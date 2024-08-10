@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <main>
-      <Dashboard resp={resp} />
+      <Dashboard diceResp={resp} />
     </main>
   );
 }
