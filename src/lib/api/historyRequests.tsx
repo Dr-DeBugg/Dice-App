@@ -3,6 +3,7 @@
 import { sql } from "@vercel/postgres";
 import { NaturalCountType } from "../handleRollComplete";
 import { HistoryData } from "./diceRequests";
+import { unstable_noStore } from "next/cache";
 
 function createHistoryResponse(history: HistoryData[], counts: CountData, error?: string) {
   return { error, history, counts };
@@ -14,6 +15,8 @@ export interface CountData {
 }
 
 export async function getHistory() {
+  unstable_noStore();
+
   try {
     const result = await sql`
       SELECT * FROM history ORDER BY id DESC LIMIT 20
