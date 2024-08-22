@@ -8,7 +8,7 @@ export default async function Home() {
   const resp = await getInitialData();
 
   return (
-    <main>
+    <main className="mb-4">
       <Dashboard diceResp={resp} />
     </main>
   );

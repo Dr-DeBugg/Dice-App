@@ -3,5 +3,9 @@ import HistoryTable from "./history-table";
 
 export default async function HistoryPage() {
   const resp = await getHistory();
-  return <HistoryTable resp={resp} />;
+  return (
+    <div className="mb-4">
+      <HistoryTable resp={resp} />
+    </div>
+  );
 }

@@ -50,7 +50,7 @@ export async function onSubmitAction(data: FormData): Promise<FormState> {
   try {
     await sql`INSERT INTO Dices (Id, Color, Sides) VALUES ( gen_random_uuid (), ${die.color}, ${die.sides});`;
     revalidatePath("/", "page");
-    return { message: "Added new die" };
+    return { message: "New die added successfully!" };
   } catch (e) {
     return { message: "Error: Failed to create die" };
   }
