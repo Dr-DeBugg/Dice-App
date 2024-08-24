@@ -16,16 +16,13 @@ interface DicesResponse {
 export default function Dashboard({ diceResp }: DicesResponse) {
   const data = useMemo(() => diceResp.dices, []);
 
-  const onDelete = useCallback(
-    () => async (id: string) => {
-      const resp = await deleteDie(id);
-      toast({
-        variant: resp?.error ? "destructive" : "success",
-        description: resp?.error ? resp.error : resp?.message,
-      });
-    },
-    []
-  );
+  const onDelete = useCallback(async (id: string) => {
+    const resp = await deleteDie(id);
+    toast({
+      variant: resp?.error ? "destructive" : "success",
+      description: resp?.error ? resp.error : resp?.message,
+    });
+  }, []);
 
   const columns = useMemo(() => getDiceColumns({ onDelete }), []);
 
