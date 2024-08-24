@@ -15,11 +15,12 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../shadcn/select";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
-import { GradientPicker } from "./gradient-picker";
+import { memo, useState } from "react";
 import { onSubmitAction } from "@/lib/api/diceRequests";
 import { schema } from "@/lib/schema";
 import { toast } from "../shadcn/use-toast";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { GradientPicker } from "./gradient-picker";
 
 interface NewDieDialogProps {
   closeModal: () => void;
@@ -28,6 +29,7 @@ interface NewDieDialogProps {
 
 export function NewDieDialog({ closeModal, isModalOpen }: NewDieDialogProps) {
   const [background, setBackground] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -37,6 +39,7 @@ export function NewDieDialog({ closeModal, isModalOpen }: NewDieDialogProps) {
   const { isValid, isSubmitting } = form.formState;
 
   async function onSubmit(data: z.output<typeof schema>) {
+    setLoading(true);
     const formData = new FormData();
     formData.append("sides", data.sides);
     formData.append("color", data.color);
@@ -47,11 +50,19 @@ export function NewDieDialog({ closeModal, isModalOpen }: NewDieDialogProps) {
     });
     form.reset();
     setBackground("");
+    setLoading(false);
     closeModal();
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={closeModal}>
+    <Dialog
+      open={isModalOpen}
+      onOpenChange={() => {
+        form.reset();
+        setBackground("");
+        closeModal();
+      }}
+    >
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -111,6 +122,7 @@ export function NewDieDialog({ closeModal, isModalOpen }: NewDieDialogProps) {
             />
             <DialogFooter>
               <Button disabled={!isValid || isSubmitting} type="submit">
+                {loading ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : null}
                 Save
               </Button>
             </DialogFooter>
