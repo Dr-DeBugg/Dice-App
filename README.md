@@ -6,7 +6,7 @@ This is the implementation for 🎲 Dice App - test it out for yourself here! ht
 
 !["Demo"](./diceDemo.gif)
 
-## Technologies used
+### Technologies
 
 🚀 Built with Next.js and TypeScript\
 💻 PostgreSQL database from Vercel\
