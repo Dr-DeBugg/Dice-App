@@ -50,9 +50,9 @@ export default function HistoryTable({ resp }: HistoryResponse) {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>Total number of throws ever: {resp.history[0].id} </TableCell>
-            <TableCell>Natural 20 has been rolled {resp.counts.twenty_count} times </TableCell>
+            <TableCell>Natural 20 rolled {resp.counts.twenty_count} times </TableCell>
             <TableCell className="text-right">
-              Natural 100 has been rolled {resp.counts.hundred_count} times{" "}
+              Natural 100 rolled {resp.counts.hundred_count} times{" "}
             </TableCell>
           </TableRow>
         </TableFooter>

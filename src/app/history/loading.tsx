@@ -6,7 +6,7 @@ export default function Loading() {
       <div className="rounded-md border">
         <div className="flex flex-col space-y-3">
           {Array.from({ length: 20 }).map((_, index) => (
-            <Skeleton key={index} className="h-11 w-full" />
+            <Skeleton key={index} className="h-12 w-full" />
           ))}
         </div>
       </div>
