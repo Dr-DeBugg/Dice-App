@@ -1,6 +1,6 @@
-# DiceApp
+# 🎲 Dice App
 
-This is the implementation for 🎲DiceApp - test it out for yourself here! https://dice-app-gamma.vercel.app/
+This is the implementation for 🎲 Dice App - test it out for yourself here! https://dice-app-gamma.vercel.app/
 
 ### Demo
 
