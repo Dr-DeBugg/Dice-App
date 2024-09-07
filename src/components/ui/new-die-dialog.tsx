@@ -15,7 +15,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../shadcn/select";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { onSubmitAction } from "@/lib/api/diceRequests";
 import { schema } from "@/lib/schema";
 import { toast } from "../shadcn/use-toast";

@@ -5,9 +5,9 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { schema } from "../schema";
 
-function createDiceResponse(dices: Die[], error?: string) {
-  return { error, dices };
-}
+export type FormState = {
+  message: string;
+};
 
 export interface HistoryData {
   timestamp: string;
@@ -15,6 +15,10 @@ export interface HistoryData {
   individual_results: string;
   result_sum: number;
   id?: number;
+}
+
+function createDiceResponse(dices: Die[], error?: string) {
+  return { error, dices };
 }
 
 export async function getAllDices() {
@@ -30,10 +34,6 @@ export async function getAllDices() {
     return createDiceResponse([], "Internal Server Error");
   }
 }
-
-export type FormState = {
-  message: string;
-};
 
 export async function onSubmitAction(data: FormData): Promise<FormState> {
   const formData = Object.fromEntries(data);

@@ -6,7 +6,6 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
-  Row,
 } from "@tanstack/react-table";
 
 import {
@@ -17,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/table";
-import React, { useMemo } from "react";
+import React from "react";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { DataTablePagination } from "./data-table-pagination";
 import { Die } from "./columns";

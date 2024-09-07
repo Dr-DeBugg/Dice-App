@@ -6,7 +6,6 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
-  Row,
 } from "@tanstack/react-table";
 
 import {
